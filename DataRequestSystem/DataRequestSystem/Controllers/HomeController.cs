@@ -8,21 +8,21 @@ namespace DataRequestSystem.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult RequestSubmission()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult CompletedRequests()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult RequestQueue()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "";
 
             return View();
         }
