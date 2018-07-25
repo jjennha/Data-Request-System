@@ -2,26 +2,9 @@
     ViewBag.Title = "Request Queue";
 }
 
-<body>
-    <h2>@ViewBag.Title</h2>
+﻿@section scripts {
+    @Scripts.Render("~/bundles/app")
+}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Date Requested</th>
-                <th>Requester Name</th>
-                <th>Type</th>
-                <th></th>
-            </tr>
-        </thead>
-
-        <tbody class="requestList" data-bind="foreach: requests">
-            <tr>
-
-            </tr>
-        </tbody>
-    </table>
-
-</body>
 
 

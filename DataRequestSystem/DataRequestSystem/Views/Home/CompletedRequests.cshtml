@@ -2,8 +2,52 @@
     ViewBag.Title = "Completed Requests";
 }
 
+﻿@section scripts {
+    @Scripts.Render("~/bundles/app")
+}
+
 <body>
     <h2>@ViewBag.Title</h2>
 
+    <table class="table table-hover">
 
+        <thead>
+            <tr>
+                <th>Date Requested</th>
+                <th>Requester Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Ticket</th>
+                <th>File</th>
+                <th>Form</th>
+            </tr>
+        </thead>
+
+        <tbody class="panel-group" data-bind="foreach: $root.requests">
+            <tr class="panel panel-default panel-heading collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapse"
+                data-bind="if: $data.CompletionStatus === 'Complete', attr: {'data-target' : ('#collapse' + $data.Id) }">
+
+                <td data-bind="text: $data.DateRequested.substring(0, 10)"></td>
+                <td data-bind="text: $data.RequesterName"></td>
+                <td data-bind="text: $data.Type"></td>
+                <td data-bind="text: $data.CompletionStatus"></td>
+                <td>
+                    <a data-bind="attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
+                </td>
+                <td data-bind="">
+                    <a data-bind="attr: {href: $data.FileURL}, text: $data.FileName"></a>
+                </td>
+                <td data-bind="">
+                    <p>Click to see</p>
+                </td>
+            </tr>
+
+            <tr class="collapse" data-bind="attr: { id: ('collapse' + $data.Id) }">
+                <td class="panel-body">
+                    <p>Content</p>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
 </body>
