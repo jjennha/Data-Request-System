@@ -33,31 +33,27 @@ namespace DataRequestSystem.Models
         [Required]
         public string UsageExplanation { get; set; }
 
-        public string RequestComments { get; set; }
-
-        public string Viewers { get; set; }
-
-        public int NumberViewers { get; set; }
-
         [Required]
         public string Format { get; set; }
 
+        public string Type { get; set; }
+        public string RequestComments { get; set; }
+        public string Viewers { get; set; }
+        public int NumberViewers { get; set; }
+
         // For Devs
         public DateTime DatePulled { get; set; }
-
         public DateTime DatePulledBy { get; set; }
-
         public string DevComments { get; set; }
-
-        public string FilesAttached { get; set; }
-
-        public string CompletionStatus { get; set; }
-
         public string UncompletionReason { get; set; }
-
-        // Completed Requests only
+        public string CompletionStatus { get; set; }
+        public int TicketNumber { get; set; }
+        public string TicketURL { get; set; }
         public string SQLQueries { get; set; }
 
-        public string Ticket { get; set; }
+        // Completed Requests only
+        public string FileName { get; set; }
+        public string FileURL { get; set; }
+
     }
 }

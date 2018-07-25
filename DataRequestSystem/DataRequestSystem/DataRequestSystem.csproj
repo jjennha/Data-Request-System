@@ -157,6 +157,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<!--<<<<<<< HEAD
+=======
+    <Compile Include="Migrations\201807242132315_stanley.cs" />
+    <Compile Include="Migrations\201807242132315_stanley.Designer.cs">
+      <DependentUpon>201807242132315_stanley.cs</DependentUpon>
+    </Compile>
+>>>>>>> f62db21fe2cf1fb6d6ba41c67906fa8dba3e582b-->
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataRequestSystemContext.cs" />
     <Compile Include="Models\FormRequest.cs" />
@@ -169,6 +176,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\AWESOME_CLOUD.jpg" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -218,6 +227,14 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+<!--<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807242132315_stanley.resx">
+      <DependentUpon>201807242132315_stanley.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+>>>>>>> f62db21fe2cf1fb6d6ba41c67906fa8dba3e582b-->
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

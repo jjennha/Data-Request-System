@@ -36,11 +36,14 @@ namespace DataRequestSystem.Migrations
                         DatePulled = new DateTime(2018, 4, 5),
                         DatePulledBy = new DateTime(2018, 4, 5),
                         DevComments = "biwbfinvsfjs",
-                        FilesAttached = "txt.txt",
+                        FileURL = "something.com",
+                        FileName = "txt.txt",
                         CompletionStatus = "not done",
                         UncompletionReason = "sorry",
                         SQLQueries = "query.com",
-                        Ticket = "ticket.org"
+                        TicketURL = "ticket.org",
+                        TicketNumber = 1,
+                        Type = "Resignation"
                     }
             );
 
@@ -60,11 +63,14 @@ namespace DataRequestSystem.Migrations
                         DatePulled = new DateTime(2018, 4, 5),
                         DatePulledBy = new DateTime(2018, 4, 15),
                         DevComments = "ok",
-                        FilesAttached = "bbonfgiobs.txt",
+                        FileURL = "somethingelse.com",
+                        FileName = "bbonfgiobs.txt",
                         CompletionStatus = "not done",
                         UncompletionReason = "sorry",
                         SQLQueries = "michael.com",
-                        Ticket = "mykael.org"
+                        TicketURL = "mykael.org",
+                        TicketNumber = 2,
+                        Type = "Challenge"
                     }
             );
 
