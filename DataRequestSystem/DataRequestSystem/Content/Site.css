@@ -77,3 +77,20 @@ textarea {
 .container{
     margin: 0;
 }
+
+.glyphicon {
+    position: static;
+    display: table-cell;
+}
+
+.table > tbody > tr {
+    border: 1px solid #dddddd;
+}
+
+.requestRow:hover {
+    background: #13a9e1;
+}
+
+.requestRow:hover a{
+    color: white;
+}
