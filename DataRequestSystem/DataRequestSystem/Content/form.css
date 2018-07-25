@@ -1,0 +1,23 @@
+﻿body {
+   
+}
+
+#form {
+    background: #2b323d;
+    color: white;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.col1 {
+    /*display : inline-block;*/
+    padding-left: 20px;
+}
+
+.row2 {
+    padding-left: 20px;
+}
+
+#row3 {
+    padding-left: 20px;
+}

@@ -23,7 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-img:hover {
+#shakeme:hover {
     animation: shake .2s;
     animation-iteration-count: infinite;
 }

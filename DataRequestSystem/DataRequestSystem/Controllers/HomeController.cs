@@ -35,14 +35,17 @@ namespace DataRequestSystem.Controllers
                         RequestComments = form.RequestComments,
                         Viewers = form.Viewers,
                         Format = form.Format,
-                        DatePulled = form.DatePulled,
-                        DatePulledBy = form.DatePulledBy,
-                        DevComments = form.DevComments,
-                        FilesAttached = form.FilesAttached,
-                        CompletionStatus = form.CompletionStatus,
-                        UncompletionReason = form.UncompletionReason,
-                        SQLQueries = form.SQLQueries,
-                        Ticket = form.Ticket
+                        DatePulled = DateTime.Now.ToLocalTime(),
+                        //DataPulledBy = form.DataPulledBy,
+                        //DevComments = form.DevComments,
+                        //FileName = form.FileName,
+                        //FileURL = form.FileURL,
+                        //CompletionStatus = form.CompletionStatus,
+                        //UncompletionReason = form.UncompletionReason,
+                        //SQLQueries = form.SQLQueries,
+                        //TicketNumber = form.TicketNumber,
+                        //TicketURL = form.TicketURL,
+                        //Type = form.Type
                     };
                     db.FormRequests.Add(newForm);
                     await db.SaveChangesAsync();

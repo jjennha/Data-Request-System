@@ -23,7 +23,7 @@ namespace DataRequestSystem.Migrations
             context.FormRequests.AddOrUpdate(o => o.Id,
                     new FormRequest
                     {
-                        DateRequested = new DateTime(2018, 4,5),
+                        DateRequested = new DateTime(2018, 4, 5),
                         DateWanted = new DateTime(2018, 4, 5),
                         RequesterName = "Cofdy",
                         PriorityLevel = "Immediately",
@@ -34,7 +34,7 @@ namespace DataRequestSystem.Migrations
                         Viewers = "Justin",
                         Format = "csv",
                         DatePulled = new DateTime(2018, 4, 5),
-                        DatePulledBy = new DateTime(2018, 4, 5),
+                        DataPulledBy = "myself",
                         DevComments = "biwbfinvsfjs",
                         FileURL = "something.com",
                         FileName = "txt.txt",
@@ -61,7 +61,7 @@ namespace DataRequestSystem.Migrations
                         Viewers = "Jenny",
                         Format = "csv",
                         DatePulled = new DateTime(2018, 4, 5),
-                        DatePulledBy = new DateTime(2018, 4, 15),
+                        DataPulledBy = "myself",
                         DevComments = "ok",
                         FileURL = "somethingelse.com",
                         FileName = "bbonfgiobs.txt",
