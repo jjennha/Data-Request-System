@@ -43,7 +43,7 @@ namespace DataRequestSystem.Models
 
         // For Devs
         public DateTime DatePulled { get; set; }
-        public DateTime DatePulledBy { get; set; }
+        public string DataPulledBy { get; set; }
         public string DevComments { get; set; }
         public string UncompletionReason { get; set; }
         public string CompletionStatus { get; set; }
