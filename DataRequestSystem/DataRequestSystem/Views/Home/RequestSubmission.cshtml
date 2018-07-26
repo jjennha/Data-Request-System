@@ -1,31 +1,119 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model DataRequestSystem.Models.FormRequest
+
+@{
+    ViewBag.Title = "Request Submission";
 }
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/form.css">
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+</head>
+@*<div class="jumbotron">
+    <h2>Data Request Submission</h2>
+</div>*@
 
+<body>
+    <div id="form">
+        <h2>Data Request Submission</h2>
+        @using (Html.BeginForm("AddRequestSubmission", "Home"))
+    {
+        @*<h2>Request Information</h2>*@
+
+        <div class="container-fluid left">
+            <div class="form-group col1">
+                <h5>Requester Name</h5>
+                @Html.TextBoxFor(r => r.RequesterName, new { @class = "panel" })
+            </div>
+            <div class="form-group col1">
+                <h5>Date Wanted By</h5>
+                @* @Html.TextAreaFor(r => r.DateWanted)*@
+
+                @Html.TextBoxFor(r => r.DateWanted, new { @class = "panel", type = "date" })
+                @Html.ValidationMessageFor(r => r.DateWanted)
+
+            </div>
+            <div class="form-group col1">
+                <h5>Priority Level</h5>
+                @Html.DropDownListFor(m => m.PriorityLevel, new List<SelectListItem>
+   { new SelectListItem{Text="Critical", Value="Critical"},
+     new SelectListItem{Text="Important", Value="Important"},
+     new SelectListItem{Text="Normal", Value="Normal"},
+     new SelectListItem{Text="Low", Value="Low"},
+   }, "Please select", new { @class = "panel" })
+            </div>
+            <div class="form-group col1">
+                <h5>Number of Requests</h5>
+                @Html.TextBoxFor(r => r.NumberRequests, new { @class = "panel" })
+            </div>
+            <div class="form-group col1">
+                <h5>Format</h5>
+                @Html.DropDownListFor(m => m.Format, new List<SelectListItem>
+   { new SelectListItem{Text="Excel", Value="Excel"},
+     new SelectListItem{Text="Visualization (chart)", Value="Visualization (chart)"},
+     new SelectListItem{Text="CFV", Value="CFV"},
+   }, "Please select", new { @class = "panel" })
+            </div>
+
+
+        </div>
+        <div class="container-fluid right">
+            <div class="form-group">
+                <h5>Request(s)</h5>
+                @Html.TextAreaFor(r => r.Requests, new { @class = "panel" })
+            </div>
+            <div class="form-group">
+                <h5>Briefly explain what this data will be used for.</h5>
+                @Html.TextAreaFor(r => r.UsageExplanation, new { @class = "panel" })
+            </div>
+            <div class="form-group">
+                <h5>Who will view this data?</h5>
+                @Html.TextAreaFor(r => r.Viewers, new { @class = "panel" })
+            </div>
+            <div class="form-group">
+                <h5>How many viewers?</h5>
+                @Html.TextBoxFor(r => r.NumberViewers, new { @class = "panel" })
+            </div>
+
+        </div>
+        <div class="form-group bottom">
+            <h5>Additional Comments</h5>
+            @Html.TextAreaFor(r => r.RequestComments, new { @class = "panel" })
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+
+
+        @*<h2>Developer notes</h2>
+        <div class="form-group">
+            <h5>Date Pulled</h5>
+            @Html.TextBoxFor(r => r.DatePulled, new { @class = "form-control", type = "date" })
+        </div>
+        <div class="form-group">
+            <h5>Date Pulled By</h5>
+            @Html.TextBoxFor(r => r.DataPulledBy, new { @class = "form-control", type = "date" })
+        </div>
+        <div class="form-group">
+            <h5>Additional Comments</h5>
+            @Html.TextAreaFor(r => r.DevComments)
+        </div>
+        <div class="form-group">
+            <h5>Files Attached</h5>
+            @Html.TextAreaFor(r => r.FileName)
+        </div>
+        <div class="form-group">
+            <h5>Completion Status</h5>
+            @Html.TextAreaFor(r => r.CompletionStatus)
+        </div>
+        <div class="form-group">
+            <h5>Reason if not complete</h5>
+            @Html.TextAreaFor(r => r.UncompletionReason)
+        </div>*@
+
+
+}
+    </div>
+
+</body>
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+
 </div>

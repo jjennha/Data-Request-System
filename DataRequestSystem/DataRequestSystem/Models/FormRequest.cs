@@ -15,8 +15,10 @@ namespace DataRequestSystem.Models
         [Required]
         public DateTime DateRequested { get; set; }
 
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required]
-        public DateTime DateWanted { get; set; }
+        public Nullable<DateTime> DateWanted { get; set; }
 
         [Required]
         public string RequesterName { get; set; }

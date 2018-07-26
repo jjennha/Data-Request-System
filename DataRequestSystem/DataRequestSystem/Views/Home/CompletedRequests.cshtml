@@ -12,118 +12,113 @@
 
 <body>
     <div class="container-fluid">
-        <h2>@ViewBag.Title</h2>
 
         <div class="row request-table-headers">
             <span class="col-md-2">Date Requested</span>
-            <span class="col-md-2">Requester Name</span>
-            <span class="col-md-2">Type</span>
+            <span class="col-md-2">Requester</span>
+            <span class="col-md-3">Description</span>
             <span class="col-md-2">Status</span>
             <span class="col-md-1">Ticket</span>
             <span class="col-md-2">File</span>
-            <span class="col-md-1">Form</span>
         </div>
 
         <div class="panel-group" data-bind="foreach: $root.requests">
             <div" data-bind="if: $data.CompletionStatus === 'Complete'">
-                <div class="panel panel-default requestRow">
+                <div class="panel panel-default requestRow panel-heading collapsed row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse"
+                     data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }">
 
-                    <div class="panel-heading collapsed row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse"
-                         data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }">
+                    <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
+                    <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
+                    <textarea class="col-md-3" data-bind="value: $data.Type" readonly></textarea>
+                    <span class="col-md-2" data-bind="text: $data.CompletionStatus"></span>
+                    <a class="col-md-1" data-bind="attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
+                    <a class="col-md-2" data-bind="attr: {href: $data.FileURL}, text: $data.FileName"></a>
+                </div>
 
-                        <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
-                        <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
-                        <span class="col-md-2" data-bind="text: $data.Type"></span>
-                        <span class="col-md-2" data-bind="text: $data.CompletionStatus"></span>
-                        <a class="col-md-1" data-bind="attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
-                        <a class="col-md-2" data-bind="attr: {href: $data.FileURL}, text: $data.FileName"></a>
-                        <span class="col-md-1 glyphicon glyphicon-plus"></span>
-                    </div>
+                <!-- COLLAPSABLE INFO -->
+                <div class="collapse" data-bind="attr: { id: ('collapse' + $data.Id) }">
+                    <div class="panel-body">
+                        <h4>Requested Information</h4>
 
-                    <!-- COLLAPSABLE INFO -->
-                    <div class="collapse" data-bind="attr: { id: ('collapse' + $data.Id) }">
-                        <div class="panel-body">
-                            <h4>Requested Information</h4>
+                        <div class="row">
+                            <strong class="col-md-3">Date Requested:</strong>
+                            <span class="col-md-3" data-bind="text:  $data.DateRequested.substring(0, 10)"></span>
 
-                            <div class="row">
-                                <strong class="col-md-3">Date Requested:</strong>
-                                <span class="col-md-3" data-bind="text:  $data.DateRequested.substring(0, 10)"></span>
+                            <strong class="col-md-3">Date Wanted By:</strong>
+                            <span class="col-md-3" data-bind="text:  $data.DateWanted.substring(0, 10)"></span>
+                        </div>
 
-                                <strong class="col-md-3">Date Wanted By:</strong>
-                                <span class="col-md-3" data-bind="text:  $data.DateWanted.substring(0, 10)"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Requester Name:</strong>
+                            <span class="col-md-3" data-bind="text: $data.RequesterName"></span>
 
-                            <div class="row">
-                                <strong class="col-md-3">Requester Name:</strong>
-                                <span class="col-md-3" data-bind="text: $data.RequesterName"></span>
+                            <strong class="col-md-3">Number of Requests: </strong>
+                            <span class="col-md-3" data-bind="text:  $data.NumberRequests"></span>
+                        </div>
 
-                                <strong class="col-md-3">Number of Requests: </strong>
-                                <span class="col-md-3" data-bind="text:  $data.NumberRequests"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Format: </strong>
+                            <span class="col-md-3" data-bind="text: $data.Format"></span>
 
-                            <div class="row">
-                                <strong class="col-md-3">Type: </strong>
-                                <span class="col-md-3" data-bind="text: $data.Type"></span>
+                            <strong class="col-md-3">Priority Level: </strong>
+                            <span class="col-md-3" data-bind="text:  $data.PriorityLevel"></span>
+                        </div>
 
-                                <strong class="col-md-3">Priority Level: </strong>
-                                <span class="col-md-3" data-bind="text:  $data.PriorityLevel"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Request(s): </strong>
+                            <textarea data-bind="text: $data.Requests" readonly></textarea>
+                        </div>
 
-                            <div class="row">
-                                <strong class="col-md-3">Request(s): </strong>
-                                <span class="col-md-9" data-bind="text: $data.Requests"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Description: </strong>
+                            <textarea class="col-md-8" data-bind="value: $data.Type" readonly></textarea>
+                        </div>
 
-                            <div class="row">
-                                <strong class="col-md-3">Additional Comments: </strong>
-                                <span class="col-md-9" data-bind="text: $data.RequestComments"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Additional Comments: </strong>
+                            <textarea class="col-md-8" data-bind="text: $data.RequestComments" readonly></textarea>
+                        </div>
 
-                            <div class="row">
-                                <strong class="col-md-3">Format: </strong>
-                                <span class="col-md-3" data-bind="text: $data.Format"></span>
-                            </div>
+                        <h4>Developer Notes</h4>
 
-                            <h4>Developer Notes</h4>
+                        <div class="row">
+                            <strong class="col-md-3">Data Pulled By: </strong>
+                            <span class="col-md-3" data-bind="text: $data.RequesterName"></span>
 
-                            <div class="row">
-                                <strong class="col-md-3">Data Pulled By: </strong>
-                                <span class="col-md-3" data-bind="text: $data.RequesterName"></span>
+                            <strong class="col-md-3">Date Pulled: </strong>
+                            <span class="col-md-3" data-bind="text: $data.DatePulled.substring(0, 10)"></span>
+                        </div>
 
-                                <strong class="col-md-3">Date Pulled: </strong>
-                                <span class="col-md-3" data-bind="text: $data.DatePulled.substring(0, 10)"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">File Attached: </strong>
+                            <a class="col-md-3" data-bind="attr: {href: $data.FileURL}, text: $data.FileName"></a>
 
-                            <div class="row">
-                                <strong class="col-md-3">Developer Comments: </strong>
-                                <span class="col-md-9" data-bind="text: $data.DevComments"></span>
-                            </div>
+                            <strong class="col-md-3">SQL Queries: </strong>
+                            <span class="col-md-3" data-bind="text:  $data.SQLQueries"></span>
+                        </div>
 
-                            <div class="row">
-                                <strong class="col-md-3">Completion Status: </strong>
-                                <span class="col-md-3" data-bind="text: $data.CompletionStatus"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Completion Status: </strong>
+                            <span class="col-md-3" data-bind="text: $data.CompletionStatus"></span>
 
-                            <div class="row">
-                                <strong class="col-md-3">Reason(s) for Incompletion, if applicable: </strong>
-                                <span class="col-md-9" data-bind="text: $data.UncompletionReason"></span>
-                            </div>
+                            <strong class="col-md-3">Ticket: </strong>
+                            <a class="col-md-1" data-bind="attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
+                        </div>
 
-                            <div class="row">
-                                <strong class="col-md-3">File Attached: </strong>
-                                <a class="col-md-3" data-bind="attr: {href: $data.FileURL}, text: $data.FileName"></a><br />
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Reason(s) for Incompletion, if applicable: </strong>
+                            <textarea class="col-md-8" data-bind="text: $data.UncompletionReason" readonly></textarea>
+                        </div>
 
-                            <div class="row">
-                                <strong class="col-md-3">SQL Queries: </strong>
-                                <span class="col-md-9" data-bind="text:  $data.SQLQueries"></span>
-                            </div>
+                        <div class="row">
+                            <strong class="col-md-3">Developer Comments: </strong>
+                            <textarea class="col-md-8" data-bind="text: $data.DevComments" readonly></textarea>
                         </div>
                     </div>
-                    <!-- COLLAPSIBLE INFO END -->
-
                 </div>
+                <!-- COLLAPSIBLE INFO END -->
             </div">
+
 
         </div>
     </div>

@@ -1,10 +1,13 @@
-﻿.glyphicon {
-    position: static;
-    display: table-cell;
+﻿.container-fluid {
+    padding-top: 20px;
 }
 
-.requestRow:hover *{
-    background: #5bc9f1;
+.glyphicon {
+    position: static;
+}
+
+.requestRow:hover {
+    background: #e8f0f8 !important;
 }
 
     .requestRow:hover a {
@@ -12,14 +15,13 @@
     }
 
 
-.panel-body {
-    border: 1px solid lightgray;
+.panel-body {    border: 1px solid lightgray;
     background: #e8f0f8;
 }
 
     .panel-body * {
-        padding-top: 2px;
-        padding-bottom: 2px;
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
 
     .panel-body h4 {
@@ -29,25 +31,54 @@
         font-weight: bold;
     }
 
-.panel-heading {
+.requestRow {
     margin-left: 0px;
     margin-right: 0px;
     padding: 0px;
     background-color: white;
+    max-height: 70px;
 }
 
-.requestRow {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
+    .requestRow > * {
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        /*border: 1px solid lightgray;*/
+    }
 
 .request-table-headers {
     margin: 0px;
     padding: 0px;
     font-weight: bold;
+    background-color: #5bc9f1;
 }
 
-h2 {
+.request-table-headers > * {
     text-align: center;
-    margin: 20px;
+}
+
+.panel-body div.row *, .requestRow * {
+    overflow-wrap: break-word;
+}
+
+.panel-body div.row textarea {
+    background-color: white;
+    border-radius: 3px;
+    padding-bottom: 0px;
+    min-height: 20px;
+    min-width: 70%;
+    resize: none;
+    overflow: auto;
+    padding: 1%;
+}
+
+.requestRow textarea {
+    background-color: inherit;
+    border: none;
+    resize: none;
+    padding: 0.25%;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+    max-height: 40px;
+    overflow: hidden;
 }

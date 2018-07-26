@@ -2,7 +2,9 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
-
+.container {
+    margin: auto;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -20,10 +22,10 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 70%;
 }
 
-img:hover {
+#shakeme:hover {
     animation: shake .2s;
     animation-iteration-count: infinite;
 }
@@ -74,6 +76,15 @@ img:hover {
     }
 }
 
-.container{
+.container {
     margin: 0;
+}
+
+.glyphicon {
+    position: static;
+    display: table-cell;
+}
+
+.table > tbody > tr {
+    border: 1px solid #dddddd;
 }
