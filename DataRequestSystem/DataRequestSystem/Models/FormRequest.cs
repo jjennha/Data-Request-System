@@ -12,15 +12,16 @@ namespace DataRequestSystem.Models
         public int Id { get; set; }
 
         // Request
-        [Required]
         public DateTime DateRequested { get; set; }
 
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required]
-        public Nullable<DateTime> DateWanted { get; set; }
+        [Required(ErrorMessage = "Date is required.")]
+        [DataType(DataType.DateTime)]
+        public DateTime DateWanted { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Name is required.")]
+        [DataType(DataType.Text)]
         public string RequesterName { get; set; }
 
         [Required]

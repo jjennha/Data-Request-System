@@ -53,6 +53,7 @@ namespace DataRequestSystem.Controllers
                 }
              
             }
+            ViewResult v = View(form);
             return RedirectToAction("RequestSubmission");
         }
         public ActionResult CompletedRequests()
