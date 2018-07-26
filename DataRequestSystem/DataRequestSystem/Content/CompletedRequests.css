@@ -1,0 +1,53 @@
+﻿.glyphicon {
+    position: static;
+    display: table-cell;
+}
+
+.requestRow:hover *{
+    background: #5bc9f1;
+}
+
+    .requestRow:hover a {
+        color: white;
+    }
+
+
+.panel-body {
+    border: 1px solid lightgray;
+    background: #e8f0f8;
+}
+
+    .panel-body * {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .panel-body h4 {
+        background-color: #5bc9f1;
+        border-radius: 3px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+.panel-heading {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px;
+    background-color: white;
+}
+
+.requestRow {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.request-table-headers {
+    margin: 0px;
+    padding: 0px;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+    margin: 20px;
+}

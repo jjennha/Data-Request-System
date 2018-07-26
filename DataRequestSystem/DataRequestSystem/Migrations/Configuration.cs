@@ -15,15 +15,10 @@ namespace DataRequestSystem.Migrations
 
         protected override void Seed(DataRequestSystem.Models.DataRequestSystemContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
-
             context.FormRequests.AddOrUpdate(o => o.Id,
                     new FormRequest
                     {
-                        DateRequested = new DateTime(2018, 4,5),
+                        DateRequested = new DateTime(2018, 4, 5),
                         DateWanted = new DateTime(2018, 4, 5),
                         RequesterName = "Cofdy",
                         PriorityLevel = "Immediately",
@@ -73,9 +68,6 @@ namespace DataRequestSystem.Migrations
                         Type = "Challenge"
                     }
             );
-
-
-
         }
     }
 }
