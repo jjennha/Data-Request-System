@@ -10,10 +10,6 @@
     background: #e8f0f8 !important;
 }
 
-    .requestRow:hover a {
-        color: white;
-    }
-
 
 .panel-body {    border: 1px solid lightgray;
     background: #e8f0f8;
