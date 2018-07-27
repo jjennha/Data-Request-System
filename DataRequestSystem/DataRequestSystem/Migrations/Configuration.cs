@@ -38,7 +38,10 @@ namespace DataRequestSystem.Migrations
                         SQLQueries = "query.com",
                         TicketURL = "ticket.org",
                         TicketNumber = 1,
-                        Type = "Resignation"
+                        Description = "Resignation",
+                        filterFromDate = DateTime.Now.ToLocalTime(),
+                        filterToDate = DateTime.Now.ToLocalTime(),
+                        filterOther = "this is a filter!"
                     }
             );
 
@@ -65,7 +68,10 @@ namespace DataRequestSystem.Migrations
                         SQLQueries = "michael.com",
                         TicketURL = "mykael.org",
                         TicketNumber = 2,
-                        Type = "Challenge"
+                        Description = "Challenge",
+                        filterFromDate = DateTime.Now.ToLocalTime(),
+                        filterToDate = DateTime.Now.ToLocalTime(),
+                        filterOpenBuilders = true
                     }
             );
         }

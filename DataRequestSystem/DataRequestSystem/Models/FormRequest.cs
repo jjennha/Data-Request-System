@@ -15,31 +15,34 @@ namespace DataRequestSystem.Models
         public DateTime DateRequested { get; set; }
 
         //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required(ErrorMessage = "Date is required.")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Pick Date")]
         [DataType(DataType.DateTime)]
         public DateTime DateWanted { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
-        [DataType(DataType.Text)]
+        [Required]
+        //[DataType(DataType.Text)]
         public string RequesterName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pick Priority Level")]
         public string PriorityLevel { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter valid # of Requests")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int NumberRequests { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter Request(s)")]
         public string Requests { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter Usage Explanation")]
         public string UsageExplanation { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pick Format")]
         public string Format { get; set; }
 
-        public string Type { get; set; }
+        [Required(ErrorMessage = "Enter a Description")]
+        [MaxLength(200, ErrorMessage = "Name cannot be longer than 200 characters.")]
+        public string Description { get; set; }
         public string RequestComments { get; set; }
         public string Viewers { get; set; }
         public int NumberViewers { get; set; }
@@ -57,6 +60,15 @@ namespace DataRequestSystem.Models
         // Completed Requests only
         public string FileName { get; set; }
         public string FileURL { get; set; }
+
+        //Filters
+        public Boolean filterNDBuilders { get; set; }
+        public Boolean filterOpenBuilders{ get; set; }
+        public Boolean filterUSBuilders { get; set; }
+        public string filterOther { get; set; }
+
+        public DateTime filterToDate { get; set; }
+        public DateTime filterFromDate { get; set; }
 
     }
 }

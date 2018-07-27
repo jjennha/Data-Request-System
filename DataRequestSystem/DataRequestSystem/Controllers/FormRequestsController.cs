@@ -76,9 +76,41 @@ namespace DataRequestSystem.Controllers
         [ResponseType(typeof(FormRequest))]
         public async Task<IHttpActionResult> PostFormRequest(FormRequest formRequest)
         {
+            FormRequest newForm = new FormRequest
+            {
+                DateRequested = DateTime.Now.ToLocalTime(),
+                DateWanted = formRequest.DateWanted,
+                RequesterName = formRequest.RequesterName,
+                PriorityLevel = formRequest.PriorityLevel,
+                NumberRequests = formRequest.NumberRequests,
+                Requests = formRequest.Requests,
+                UsageExplanation = formRequest.UsageExplanation,
+                RequestComments = formRequest.RequestComments,
+                Viewers = formRequest.Viewers,
+                Format = formRequest.Format,
+                DatePulled = DateTime.Now.ToLocalTime(),
+                DataPulledBy = formRequest.DataPulledBy,
+                DevComments = formRequest.DevComments,
+                FileName = formRequest.FileName,
+                FileURL = formRequest.FileURL,
+                CompletionStatus = formRequest.CompletionStatus,
+                UncompletionReason = formRequest.UncompletionReason,
+                SQLQueries = formRequest.SQLQueries,
+                TicketNumber = formRequest.TicketNumber,
+                TicketURL = formRequest.TicketURL,
+                Description = formRequest.Description,
+                filterNDBuilders = formRequest.filterNDBuilders,
+                filterOpenBuilders = formRequest.filterOpenBuilders,
+                filterUSBuilders = formRequest.filterUSBuilders,
+                filterOther = formRequest.filterOther,
+                filterToDate = DateTime.Now.ToLocalTime(),
+                filterFromDate = DateTime.Now.ToLocalTime(),
+            };
+            ModelState.Clear();
+            this.Validate(newForm);
             if (!ModelState.IsValid)
             {
-                
+
                 return BadRequest(ModelState);
             }
 
@@ -86,7 +118,11 @@ namespace DataRequestSystem.Controllers
             await db.SaveChangesAsync();
             //return Request.CreateResponse(HttpStatusCode.OK, new { Success = true, RedirectUrl = newUrl });
             //System.Diagnostics.Process.Start("localhost:54843/Home/RequestSubmission");
-            return CreatedAtRoute("DefaultApi", new { id = formRequest.Id }, formRequest);
+            return CreatedAtRoute("DefaultApi", new
+            {
+                id = formRequest.Id
+            }, formRequest);
+
         }
 
         // DELETE: api/FormRequests/5
@@ -118,6 +154,6 @@ namespace DataRequestSystem.Controllers
         {
             return db.FormRequests.Count(e => e.Id == id) > 0;
         }
-  
+
     }
 }

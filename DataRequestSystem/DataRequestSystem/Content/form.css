@@ -33,6 +33,48 @@ h2 {
     
     padding-top: 0;
 }
+.mid1, .mid2 {
+    display: inline-flex;
+    height: fit-content;
+}
+.mid2 {
+    padding-top: 10px;
+    padding-bottom: 50px;
+}
+.filter {
+    display:inline-flex;
+    padding-right:15px;
+}
+.filterDate {
+    display: inline-flex;
+    height: 20px;
+    margin-bottom:10px;
+}
+.filter .checkbox {
+    margin-top: 6px;
+}
+.filterDate .panel{
+    margin-top:5px;
+}
+#filterTitle {
+    padding-left: inherit;
+    text-decoration: underline;
+}
+.filter h5{
+    margin-top: 8px;
+    padding-right: 8px;
+}
+.filterDate h5 {
+    margin-top: 8px;
+    padding-right: 8px;
+}
+#filterTo {
+    padding-left: 8px;
+}
+#filterOther {
+    height: 20px;
+    margin-top: 5px;
+}
 .right {
     padding-top:0;
 }
@@ -48,11 +90,11 @@ h2 {
 }
 
 .panel{
-    width: -webkit-fill-available;
+    margin-bottom: 0;
 }
 textarea {
     width: 100%;
-    max-width: 100%;
+    width: 100%;
     min-height: 100px;
 }
 .btn {

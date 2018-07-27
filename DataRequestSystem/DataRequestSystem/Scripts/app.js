@@ -9,7 +9,7 @@
         'status': ko.observableArray([]),
         'dateRequested': { 'from': ko.observable(null), 'to': ko.observable(null) },
         'dateWanted': { 'from': ko.observable(null), 'to': ko.observable(null) }
-    }
+    };
 
     //self.filters.dateWanted.from(Date.now());
 
@@ -51,7 +51,7 @@
         }
 
         return true;
-    }
+    };
 
     self.getRequests = function getRequests() {
         ajaxHelper('/api/FormRequests/', 'GET').done(function (data) {
@@ -63,8 +63,8 @@
             }
 
             self.requests.sort(DateRequestedComparatorA);
-        })
-    }
+        });
+    };
 
     self.sort = function sort(element, data, comparatorA, comparatorD) {
         if (element !== self.currentElement) $(element).removeClass('sortedAscending');
@@ -79,10 +79,10 @@
         }
 
         return jqueryElement.toggleClass('sortedAscending');
-    }
+    };
 
     self.getRequests();
-}
+};
 
 
 ko.applyBindings(new ViewModel());
@@ -112,12 +112,18 @@ $(".btn").click(function () {
         "Format": $(formatID).val(),
         "Requests": $("#Requests").val(),
         "UsageExplanation": $("#UsageExplanation").val(),
-        "Type": $("#Type").val(),
+        "Description": $("#Description").val(),
         "Viewers": $("#Viewers").val(),
         "NumberViewers": $("#NumberViewers").val(),
         "RequestComments": $("#RequestComments").val(),
         "DatePulled": new Date().toLocaleDateString(),
-        "CompletionStatus": "New"
+        "CompletionStatus": "New",
+        "filterNDBuilders": $("filterNDBuilders").val(),
+        "filterOpenBuilders": $("filterOpenBuilders").val(),
+        "filterUSBuilders": $("filterUSBuilders").val(),
+        "filterOther": $("filterOther").val(),
+        "filterFromDate": new Date().toLocaleDateString(),
+        "filterToDate": new Date().toLocaleDateString()
     };
 
     var json = JSON.stringify(request);
@@ -134,6 +140,16 @@ $(".btn").click(function () {
         },
         error: function (xhr) {
             console.log(xhr.responseText);
+            
+            var values = JSON.parse(xhr.responseText);
+            var modelState = values.ModelState;
+
+            console.log(values.ModelState);
+            for (key in modelState) {
+                $("#" + key).after(`<span class="text-danger">*` + modelState[key] + `</span>`);
+                console.log(key);
+            }
+
         }
     });
 
@@ -149,7 +165,7 @@ $("#Format").click(function () {
         $("#otherFormat").css("visibility", "hidden");
         formatID = "#Format";
     }
-})
+});
 
 function DateRequestedComparatorA(request1, request2) {
     var date1 = new Date(request1.DateRequested);
@@ -191,7 +207,7 @@ function PriorityComparatorA(request1, request2) {
         "Important": 2,
         "Normal": 3,
         "Low": 4
-    }
+    };
     var priority1 = priorities[request1.PriorityLevel];
     var priority2 = priorities[request2.PriorityLevel];
 
