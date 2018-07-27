@@ -1,16 +1,84 @@
 ﻿var ViewModel = function () {
     var self = this;
-    this.requests = new ko.observableArray();
+    self.requests = new ko.observableArray();
+    self.currentElement = null;
 
-    this.getRequests = function () {
+    self.filters = {
+        'priority': ko.observableArray([]),
+        'requester': ko.observableArray([]),
+        'status': ko.observableArray([]),
+        'dateRequested': { 'from': ko.observable(null), 'to': ko.observable(null) },
+        'dateWanted': { 'from': ko.observable(null), 'to': ko.observable(null) }
+    }
+
+    //self.filters.dateWanted.from(Date.now());
+
+    self.matchesFilters = function matchesFilters(request) {
+
+        if (self.filters.priority() && self.filters.priority().length > 0 &&
+            self.filters.priority.indexOf(request.PriorityLevel) === -1) {
+            return false;
+        }
+
+        if (self.filters.requester() && self.filters.requester().length > 0 &&
+            self.filters.requester.indexOf(request.RequesterName) === -1) {
+            return false;
+        }
+
+        if (self.filters.status() && self.filters.status().length > 0 &&
+            self.filters.status.indexOf(request.CompletionStatus) === -1) {
+            return false;
+        }
+
+        if (self.filters.dateWanted.from() &&
+            new Date(self.filters.dateWanted.from()) > new Date(request.DateWanted)) {
+            return false;
+        }
+
+        if (self.filters.dateWanted.to() &&
+            new Date(self.filters.dateWanted.to()) < new Date(request.DateWanted)) {
+            return false;
+        }
+
+        if (self.filters.dateRequested.from() &&
+            new Date(self.filters.dateRequested.from()) > new Date(request.DateRequested)) {
+            return false;
+        }
+
+        if (self.filters.dateRequested.to() &&
+            new Date(self.filters.dateRequested.to()) < new Date(request.DateRequested)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    self.getRequests = function getRequests() {
         ajaxHelper('/api/FormRequests/', 'GET').done(function (data) {
             self.requests([]);
-            console.log(data);
+
             var i, length = data.length;
             for (i = 0; i < length; i++) {
                 self.requests.push(data[i]);
             }
+
+            self.requests.sort(DateRequestedComparatorA);
         })
+    }
+
+    self.sort = function sort(element, data, comparatorA, comparatorD) {
+        if (element !== self.currentElement) $(element).removeClass('sortedAscending');
+
+        self.currentElement = element;
+        var jqueryElement = $(element);
+
+        if (jqueryElement.hasClass('sortedAscending')) {
+            data.requests.sort(comparatorD);
+        } else {
+            data.requests.sort(comparatorA);
+        }
+
+        return jqueryElement.toggleClass('sortedAscending');
     }
 
     self.getRequests();
@@ -62,7 +130,7 @@ $(".btn").click(function () {
         contentType: "application/json;charset=utf-8",
         success: function (data, status, xhr) {
             console.log("The result is : " + status + ": " + data);
-            //window.location.href = "Home/RequestSubmission";
+            window.location.href = "Home/RequestSubmission";
         },
         error: function (xhr) {
             console.log(xhr.responseText);
@@ -82,3 +150,96 @@ $("#Format").click(function () {
         formatID = "#Format";
     }
 })
+
+function DateRequestedComparatorA(request1, request2) {
+    var date1 = new Date(request1.DateRequested);
+    var date2 = new Date(request2.DateRequested);
+
+    if (date1 > date2) {
+        return 1;
+    } else if (date2 > date1) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+function DateRequestedComparatorD(request1, request2) {
+    return DateRequestedComparatorA(request1, request2) * -1;
+}
+
+function DateWantedComparatorA(request1, request2) {
+    var date1 = new Date(request1.DateWanted);
+    var date2 = new Date(request2.DateWanted);
+
+    if (date1 > date2) {
+        return 1;
+    } else if (date2 > date1) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+function DateWantedComparatorD(request1, request2) {
+    return DateWantedComparatorA(request1, request2) * -1;
+}
+
+function PriorityComparatorA(request1, request2) {
+    var priorities = {
+        "Critical": 1,
+        "Important": 2,
+        "Normal": 3,
+        "Low": 4
+    }
+    var priority1 = priorities[request1.PriorityLevel];
+    var priority2 = priorities[request2.PriorityLevel];
+
+    priority1 = priority1 === undefined ? 5 : priority1;
+    priority1 = priority1 === undefined ? 5 : priority1;
+
+    if (priority1 > priority2) {
+        return 1;
+    } else if (priority2 > priority1) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+function PriorityComparatorD(request1, request2) {
+    return PriorityComparatorA(request1, request2) * -1;
+}
+
+function RequesterComparatorA(request1, request2) {
+    var requester1 = request1.RequesterName;
+    var requester2 = request2.RequesterName;
+    if (requester1 > requester2) {
+        return 1;
+    } else if (requester2 > requester1) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+function RequesterComparatorD(request1, request2) {
+    return RequesterComparatorA(request1, request2) * -1;
+}
+
+function StatusComparatorA(request1, request2) {
+    var status1 = request1.CompletionStatus;
+    var status2 = request2.CompletionStatus;
+
+    if (status1 > status2) {
+        return 1;
+    } else if (status2 > status1) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+function StatusComparatorD(request1, request2) {
+    return StatusComparatorA(request1, request2) * -1;
+}
