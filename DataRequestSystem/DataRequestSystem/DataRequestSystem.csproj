@@ -157,9 +157,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807252032556_stanley.cs" />
-    <Compile Include="Migrations\201807252032556_stanley.Designer.cs">
-      <DependentUpon>201807252032556_stanley.cs</DependentUpon>
+    <Compile Include="Migrations\201807271516479_stanley.cs" />
+    <Compile Include="Migrations\201807271516479_stanley.Designer.cs">
+      <DependentUpon>201807271516479_stanley.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataRequestSystemContext.cs" />
@@ -170,6 +170,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CompletedRequests.css" />
+    <Content Include="Content\form.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -227,8 +228,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807252032556_stanley.resx">
-      <DependentUpon>201807252032556_stanley.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807271516479_stanley.resx">
+      <DependentUpon>201807271516479_stanley.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

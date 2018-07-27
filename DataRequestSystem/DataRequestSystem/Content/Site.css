@@ -4,6 +4,7 @@
 }
 .container {
     margin: auto;
+    padding: 0;
 }
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -22,7 +23,7 @@
 input,
 select,
 textarea {
-    max-width: 70%;
+    /*max-width: 70%;*/
 }
 
 #shakeme:hover {

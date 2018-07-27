@@ -29,7 +29,7 @@
 
                     <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
                     <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
-                    <textarea class="col-md-3" data-bind="value: $data.Type" readonly></textarea>
+                    <textarea class="col-md-3" data-bind="value: $data.Description" readonly></textarea>
                     <span class="col-md-2" data-bind="text: $data.CompletionStatus"></span>
                     <a class="col-md-1" data-bind="attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
                     <a class="col-md-2" data-bind="attr: {href: $data.FileURL}, text: $data.FileName"></a>
@@ -71,7 +71,7 @@
 
                         <div class="row">
                             <strong class="col-md-3">Description: </strong>
-                            <textarea class="col-md-8" data-bind="value: $data.Type" readonly></textarea>
+                            <textarea class="col-md-8" data-bind="value: $data.Description" readonly></textarea>
                         </div>
 
                         <div class="row">

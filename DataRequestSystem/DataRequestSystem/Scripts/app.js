@@ -44,12 +44,18 @@ $(".btn").click(function () {
         "Format": $(formatID).val(),
         "Requests": $("#Requests").val(),
         "UsageExplanation": $("#UsageExplanation").val(),
-        "Type": $("#Type").val(),
+        "Description": $("#Description").val(),
         "Viewers": $("#Viewers").val(),
         "NumberViewers": $("#NumberViewers").val(),
         "RequestComments": $("#RequestComments").val(),
         "DatePulled": new Date().toLocaleDateString(),
-        "CompletionStatus": "New"
+        "CompletionStatus": "New",
+        "filterNDBuilders": $("filterNDBuilders").val(),
+        "filterOpenBuilders": $("filterOpenBuilders").val(),
+        "filterUSBuilders": $("filterUSBuilders").val(),
+        "filterOther": $("filterOther").val(),
+        "filterFromDate": new Date().toLocaleDateString(),
+        "filterToDate": new Date().toLocaleDateString(),
     };
 
     var json = JSON.stringify(request);
@@ -62,10 +68,20 @@ $(".btn").click(function () {
         contentType: "application/json;charset=utf-8",
         success: function (data, status, xhr) {
             console.log("The result is : " + status + ": " + data);
-            //window.location.href = "Home/RequestSubmission";
+            window.location.href = "Home/RequestSubmission";
         },
         error: function (xhr) {
             console.log(xhr.responseText);
+            
+            var values = JSON.parse(xhr.responseText);
+            var modelState = values.ModelState;
+
+            console.log(values.ModelState);
+            for (key in modelState) {
+                $("#" + key).after(`<span class="text-danger">*` + modelState[key] + `</span>`);
+                console.log(key);
+            }
+
         }
     });
 
@@ -82,3 +98,4 @@ $("#Format").click(function () {
         formatID = "#Format";
     }
 })
+
