@@ -78,12 +78,14 @@ namespace DataRequestSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
+                
                 return BadRequest(ModelState);
             }
 
             db.FormRequests.Add(formRequest);
             await db.SaveChangesAsync();
-
+            //return Request.CreateResponse(HttpStatusCode.OK, new { Success = true, RedirectUrl = newUrl });
+            //System.Diagnostics.Process.Start("localhost:54843/Home/RequestSubmission");
             return CreatedAtRoute("DefaultApi", new { id = formRequest.Id }, formRequest);
         }
 

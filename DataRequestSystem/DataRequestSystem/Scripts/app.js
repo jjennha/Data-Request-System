@@ -33,3 +33,52 @@ function ajaxHelper(uri, method, data) {
     });
 }
 
+$(".btn").click(function () {
+
+    var request = {
+        "DateRequested": new Date().toLocaleDateString(),
+        "DateWanted": $("#DateWanted").val(),
+        "RequesterName": $("#RequesterName").val(),
+        "PriorityLevel": $("#PriorityLevel").val(),
+        "NumberRequests": $("#NumberRequests").val(),
+        "Format": $(formatID).val(),
+        "Requests": $("#Requests").val(),
+        "UsageExplanation": $("#UsageExplanation").val(),
+        "Type": $("#Type").val(),
+        "Viewers": $("#Viewers").val(),
+        "NumberViewers": $("#NumberViewers").val(),
+        "RequestComments": $("#RequestComments").val(),
+        "DatePulled": new Date().toLocaleDateString(),
+        "CompletionStatus": "New"
+    };
+
+    var json = JSON.stringify(request);
+    console.log("REQUEST: " + request);
+    console.log("Stringified: " + json);
+    $.ajax({
+        type: "POST",
+        url: '/api/FormRequests/PostFormRequest',
+        data: JSON.stringify(request),
+        contentType: "application/json;charset=utf-8",
+        success: function (data, status, xhr) {
+            console.log("The result is : " + status + ": " + data);
+            //window.location.href = "Home/RequestSubmission";
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+        }
+    });
+
+
+});
+var formatID = "#Format";
+$("#Format").click(function () {
+    if ($("#Format").val() === "Other") {
+        //$("#otherFormat").click(function () {
+        $("#otherFormat").css("visibility", "visible");
+        formatID = "#otherFormatVal";
+    } else {
+        $("#otherFormat").css("visibility", "hidden");
+        formatID = "#Format";
+    }
+})
