@@ -8,7 +8,7 @@ namespace DataRequestSystem.Models
 {
     public class FormRequest
     {
-     
+        [Key]
         public int Id { get; set; }
 
         // Request
@@ -44,7 +44,12 @@ namespace DataRequestSystem.Models
         [MaxLength(200, ErrorMessage = "Name cannot be longer than 200 characters.")]
         public string Description { get; set; }
         public string RequestComments { get; set; }
+
+        [Required(ErrorMessage = "Enter Viewers")]
         public string Viewers { get; set; }
+
+        [Required(ErrorMessage = "Enter valid # of Viewers")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int NumberViewers { get; set; }
 
         // For Devs
@@ -58,8 +63,8 @@ namespace DataRequestSystem.Models
         public string SQLQueries { get; set; }
 
         // Completed Requests only
-        public string FileName { get; set; }
-        public string FileURL { get; set; }
+        public string[] FileNames { get; set; }
+        public string[] FileURLs { get; set; }
 
         //Filters
         public Boolean filterNDBuilders { get; set; }
