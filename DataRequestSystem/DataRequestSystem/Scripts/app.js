@@ -32,7 +32,7 @@ function ajaxHelper(uri, method, data) {
         console.log(errorThrown);
     });
 }
-
+var errorReminded = false;
 $(".btn").click(function () {
 
     var request = {
@@ -72,15 +72,18 @@ $(".btn").click(function () {
         },
         error: function (xhr) {
             console.log(xhr.responseText);
-            
+           
             var values = JSON.parse(xhr.responseText);
             var modelState = values.ModelState;
 
-            console.log(values.ModelState);
-            for (key in modelState) {
-                $("#" + key).after(`<span class="text-danger">*` + modelState[key] + `</span>`);
-                console.log(key);
+            if (!errorReminded) {
+                console.log(values.ModelState);
+                for (key in modelState) {
+                    $("#" + key).after(`<span class="text-danger" style="display: inline-block">*` + modelState[key] + `</span>`);
+                    console.log(key);
+                }
             }
+            errorReminded = true;
 
         }
     });
