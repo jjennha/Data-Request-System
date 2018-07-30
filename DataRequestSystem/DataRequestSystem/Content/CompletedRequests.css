@@ -3,6 +3,8 @@
 }
 
 .glyphicon {
+    padding: 0;
+    margin: 0;
     position: static;
 }
 
@@ -44,13 +46,16 @@
 
 .request-table-headers {
     margin: 0px;
-    padding: 0px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     font-weight: bold;
     background-color: #5bc9f1;
 }
 
 .request-table-headers > * {
     text-align: center;
+    padding: 0px;
+    margin: 0px;
 }
 
 .panel-body div.row *, .requestRow * {
@@ -60,8 +65,9 @@
 .panel-body div.row textarea {
     background-color: white;
     border-radius: 3px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     min-height: 20px;
+    height: 60px;
     min-width: 70%;
     resize: none;
     overflow: auto;
@@ -77,4 +83,10 @@
     margin-bottom: 0.5%;
     max-height: 40px;
     overflow: hidden;
+}
+
+.request-table-headers span a:visited, .request-table-headers span a:link,
+.request-table-headers span a:visited, .request-table-headers span a:link {
+    color: black;
+    text-decoration: none;
 }
