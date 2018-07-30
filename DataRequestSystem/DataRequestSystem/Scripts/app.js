@@ -20,6 +20,7 @@ var ViewModel = function () {
         $(".editable").prop("readonly", false);
         $(".selector").prop('disabled', false);
     };
+
     self.saveEdit = function saveEdit(data) {
         $(".editable").prop("readonly", true);
         $(".selector").prop('disabled', true);
@@ -166,7 +167,7 @@ $("#Submit").click(function () {
         contentType: "application/json;charset=utf-8",
         success: function (data, status, xhr) {
             console.log("The result is : " + status + ": " + data);
-            window.location.href = "Home/RequestSubmission";
+            window.location.href = "/Home/RequestSubmission";
         },
         error: function (xhr) {
             console.log(xhr.responseText);
