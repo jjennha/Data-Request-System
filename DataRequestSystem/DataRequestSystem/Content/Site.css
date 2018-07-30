@@ -76,16 +76,3 @@ textarea {
         transform: translate(1px, -2px) rotate(-2deg);
     }
 }
-
-.container {
-    margin: 0;
-}
-
-.glyphicon {
-    position: static;
-    display: table-cell;
-}
-
-.table > tbody > tr {
-    border: 1px solid #dddddd;
-}
