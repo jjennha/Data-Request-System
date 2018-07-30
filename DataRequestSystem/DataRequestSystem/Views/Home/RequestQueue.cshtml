@@ -19,9 +19,8 @@
                 <span class="dropdown">
                     <a id="DateRequestedDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
                     <span class="dropdown-menu" aria-labelledby="DateRequestedDropdown">
-                        <a class="dropdown-item" href="#">Action</a><br />
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        From: <input data-bind="value: $root.filters.dateRequested.from" type="date" /> <br />
+                        To: <input data-bind="value: $root.filters.dateRequested.to" type="date" />
                     </span>
                 </span>
                 Date Requested
@@ -34,9 +33,8 @@
                 <span class="dropdown">
                     <a id="DateWantedDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
                     <span class="dropdown-menu" aria-labelledby="DateWantedDropdown">
-                        <a class="dropdown-item" href="#">Action</a><br />
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        From: <input data-bind="value: $root.filters.dateWanted.from" type="date" /> <br />
+                        To: <input data-bind="value: $root.filters.dateWanted.to" type="date" />
                     </span>
                 </span>
                 Date Wanted
@@ -65,22 +63,29 @@
                 <span class="dropdown">
                     <a id="RequesterDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
                     <span class="dropdown-menu" aria-labelledby="RequesterDropdown">
-                        Requester: 
-                        <input type="text" data-bind="" />
+                        Add Requester: <input type="text" />
+                        <button data-bind="click: $root.addRequesterFilter">Add</button><br /><br />
+                        Current Filters:
+                        <ul data-bind="foreach: $root.filters.requester">
+                            <li>
+                                <span data-bind="text: $data"></span>
+                                <button data-bind="click: function() { $root.filters.requester.remove($($element).prev().text()); }" class="glyphicon glyphicon-remove"></button>
+                            </li>
+                        </ul>
                     </span>
                 </span>
+
                 Requester
                 <a data-bind="event: {click: function(data) { $root.sort($element, data, RequesterComparatorA, RequesterComparatorD); } }" href="#">
                     <span class="glyphicon glyphicon-sort"></span>
                 </a>
             </span>
-
             <span class="col-md-2">
                 <span class="dropdown">
                     <a id="StatusDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
                     <span class="dropdown-menu" aria-labelledby="StatusDropdown" data-bind="foreach: $root.queueStatuses">
                         <span data-bind="text: $data"></span>
-                        <input type="checkbox" class="dropdown-item" 
+                        <input type="checkbox" class="dropdown-item"
                                data-bind="event: { change: function(data) { if($element.checked) { $root.filters.status.push($data); } else { $root.filters.status.remove($data); } } }">
                         <br />
                     </span>
@@ -107,7 +112,7 @@
                     <span class="col-md-2" data-bind="text: $data.PriorityLevel"></span>
                     <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
                     <span class="col-md-2" data-bind="text: $data.CompletionStatus"></span>
-                    <textarea class="col-md-2" data-bind="value: $data.Description" readonly></textarea>
+                    <textarea class="col-md-2" data-bind="text: $data.Description" readonly></textarea>
                 </div>
 
                 <!-- COLLAPSABLE INFO -->

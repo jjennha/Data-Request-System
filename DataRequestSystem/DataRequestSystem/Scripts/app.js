@@ -4,6 +4,7 @@
     self.currentElement = null;
     self.priorities = ["Low", "Normal", "Important", "Critical"];
     self.queueStatuses = ["New", "Ticket Pending"];
+    self.completeStatuses = ["Complete", "Denied"];
 
     self.filters = {
         'priority': ko.observableArray([]),
@@ -83,6 +84,16 @@
         return jqueryElement.toggleClass('sortedAscending');
     };
 
+    self.addRequesterFilter = function addRequesterFilter(data, event) {
+        var target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+        var value = $(target).prev().val();
+
+        if (self.filters.requester.indexOf(value) === -1) {
+            self.filters.requester.push(value);
+            $(target).prev().val('');
+        }
+    }
+
     self.getRequests();
 };
 
@@ -142,7 +153,7 @@ $(".btn").click(function () {
         },
         error: function (xhr) {
             console.log(xhr.responseText);
-            
+
             var values = JSON.parse(xhr.responseText);
             var modelState = values.ModelState;
 
@@ -167,6 +178,32 @@ $("#Format").click(function () {
         $("#otherFormat").css("visibility", "hidden");
         formatID = "#Format";
     }
+});
+
+document.addEventListener("click", function (event) {
+    var openDropdown = $('.dropdown.open');
+
+    if (openDropdown.length === 0) return;
+
+    var element = $(event.target);
+    var parent = element.parent();
+    var inMenu = parent.hasClass('dropdown') || parent.parent().hasClass('dropdown') ||
+        parent.parent().parent().hasClass('dropdown') || parent.parent().parent().parent().hasClass('dropdown');
+
+    if (!inMenu) {
+        openDropdown.removeClass('open');
+    } else {
+        if (element.hasClass('dropdown-toggle')) {
+            openDropdown.addClass('open');
+        } else {
+            return;
+        }
+    }
+    event.stopPropagation();
+});
+
+$('.dropdown').on("hide.bs.dropdown", function (event) {
+    return false;
 });
 
 function DateRequestedComparatorA(request1, request2) {
