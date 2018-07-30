@@ -48,10 +48,11 @@
             <span class="col-md-2">
                 <span class="dropdown">
                     <a id="StatusDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
-                    <span class="dropdown-menu" aria-labelledby="StatusDropdown">
-                        <a class="dropdown-item" href="#">Action</a><br />
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <span class="dropdown-menu" aria-labelledby="StatusDropdown" data-bind="foreach: $root.completeStatuses">
+                        <span data-bind="text: $data"></span>
+                        <input type="checkbox" class="dropdown-item"
+                               data-bind="event: { change: function(data) { if($element.checked) { $root.filters.status.push($data); } else { $root.filters.status.remove($data); } } }">
+                        <br />
                     </span>
                 </span>
                 Status

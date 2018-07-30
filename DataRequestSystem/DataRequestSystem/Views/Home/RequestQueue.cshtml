@@ -48,10 +48,11 @@
             <span class="col-md-2">
                 <span class="dropdown">
                     <a id="PriorityDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
-                    <span class="dropdown-menu" aria-labelledby="PriorityDropdown">
-                        <a class="dropdown-item" href="#">Action</a><br />
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <span class="dropdown-menu" aria-labelledby="StatusDropdown" data-bind="foreach: $root.priorities">
+                        <span data-bind="text: $data"></span>
+                        <input type="checkbox" class="dropdown-item"
+                               data-bind="event: { change: function(data) { if($element.checked) { $root.filters.priority.push($data); } else { $root.filters.priority.remove($data); } } }">
+                        <br />
                     </span>
                 </span>
                 Priority
@@ -64,9 +65,8 @@
                 <span class="dropdown">
                     <a id="RequesterDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
                     <span class="dropdown-menu" aria-labelledby="RequesterDropdown">
-                        <a class="dropdown-item" href="#">Action</a><br />
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        Requester: 
+                        <input type="text" data-bind="" />
                     </span>
                 </span>
                 Requester
@@ -78,10 +78,11 @@
             <span class="col-md-2">
                 <span class="dropdown">
                     <a id="StatusDropdown" href="#" data-toggle="dropdown" class="glyphicon glyphicon-filter dropdown-toggle"></a>
-                    <span class="dropdown-menu" aria-labelledby="StatusDropdown">
-                        <a class="dropdown-item" href="#">Action</a><br />
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <span class="dropdown-menu" aria-labelledby="StatusDropdown" data-bind="foreach: $root.queueStatuses">
+                        <span data-bind="text: $data"></span>
+                        <input type="checkbox" class="dropdown-item" 
+                               data-bind="event: { change: function(data) { if($element.checked) { $root.filters.status.push($data); } else { $root.filters.status.remove($data); } } }">
+                        <br />
                     </span>
                 </span>
                 Status

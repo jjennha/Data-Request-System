@@ -2,6 +2,8 @@
     var self = this;
     self.requests = new ko.observableArray();
     self.currentElement = null;
+    self.priorities = ["Low", "Normal", "Important", "Critical"];
+    self.queueStatuses = ["New", "Ticket Pending"];
 
     self.filters = {
         'priority': ko.observableArray([]),
