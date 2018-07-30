@@ -23,18 +23,14 @@
         @*@using (Html.BeginForm("AddRequestSubmission", "Home"))
             {*@
         @*<h2>Request Information</h2>*@
-        @Html.ValidationSummary(true, "rgae", new { @class = "text-danger" })
         <div class="container-fluid left">
             <div class="form-group col1">
                 <h5>Requester Name</h5>
                 @Html.TextBoxFor(r => r.RequesterName, new { @class = "panel", @id = "RequesterName" })
-                @Html.ValidationMessageFor(r => r.RequesterName, null, new { @class = "text-danger" })
             </div>
             <div class="form-group col1">
                 <h5>Date Wanted By</h5>
                 @Html.TextBoxFor(r => r.DateWanted, new { @class = "panel", @type = "date", @id = "DateWanted" })
-                @Html.ValidationMessageFor(r => r.DateWanted, null, new { @class = "text-danger",  })
-
             </div>
             <div class="form-group col1">
                 <h5>Number of Requests</h5>
@@ -48,7 +44,6 @@
                                              new SelectListItem{Text="Normal", Value="Normal"},
                                              new SelectListItem{Text="Low", Value="Low"},
                                            }, "Please select", new { @class = "panel", @id = "PriorityLevel" })
-                @Html.ValidationMessageFor(r => r.PriorityLevel, "", new { @class = "text-danger" })
             </div>
             <div class="form-group col1">
                 <h5>Format</h5>
@@ -58,7 +53,6 @@
                                      new SelectListItem{Text="CFV", Value="CFV"},
                                      new SelectListItem{Text="Other", Value="Other" },
                                    }, "Please select", new { @class = "panel", @id = "Format" })
-                @Html.ValidationMessageFor(r => r.Format, "", new { @class = "text-danger" })
             </div>
             <div class="form-group col1" id="otherFormat">
                 <h5>Other Format</h5>
@@ -74,7 +68,7 @@
             </div>
             <div class="form-group filter">
                 <h5>Open Builders</h5>
-                @Html.TextBoxFor(r => r.filterNDBuilders, new { @class = "panel checkbox", @type = "checkbox", @id = "filterOpenBuilders" })
+                @Html.TextBoxFor(r => r.filterOpenBuilders, new { @class = "panel checkbox", @type = "checkbox", @id = "filterOpenBuilders" })
             </div>
             <div class="form-group filter">
                 <h5>US Builders</h5>
@@ -82,8 +76,8 @@
             </div>
             <div class="form-group filter">
                 <h5>Other: </h5>
-                @Html.TextBoxFor(r => r.filterUSBuilders, new { @class = "panel", @id = "filterOther" })
-                @Html.ValidationMessageFor(r => r.DateWanted, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(r => r.filterOther, new { @class = "panel", @id = "filterOther" })
+               
             </div>
             
         </div>
@@ -91,11 +85,9 @@
             <div class="form-group filter filterDate">
                 <h5>Date Range: </h5>
                 @Html.TextBoxFor(r => r.filterFromDate, new { @class = "panel filterDate", @type = "date", @id = "filterFromDate" })
-                @Html.ValidationMessageFor(r => r.DateWanted, "", new { @class = "text-danger" })
 
                 <h5 id="filterTo">to</h5>
                 @Html.TextBoxFor(r => r.filterFromDate, new { @class = "panel filterDate", @type = "date", @id = "filterToDate" })
-                @Html.ValidationMessageFor(r => r.DateWanted, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -103,27 +95,22 @@
             <div class="form-group">
                 <h5>Request(s)</h5>
                 @Html.TextAreaFor(r => r.Requests, new { @class = "panel", @id = "Requests" })
-                @Html.ValidationMessageFor(r => r.Requests, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <h5>Description</h5>
                 @Html.TextAreaFor(r => r.Description, new { @class = "panel", @id = "Description" })
-                @Html.ValidationMessageFor(r => r.Description, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <h5>Briefly explain what this data will be used for.</h5>
                 @Html.TextAreaFor(r => r.UsageExplanation, new { @class = "panel", @id = "UsageExplanation" })
-                @Html.ValidationMessageFor(r => r.UsageExplanation, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <h5>Who will view this data?</h5>
                 @Html.TextAreaFor(r => r.Viewers, new { @class = "panel", @id = "Viewers" })
-                @Html.ValidationMessageFor(r => r.Viewers, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <h5>How many viewers?</h5>
                 @Html.TextBoxFor(r => r.NumberViewers, new { @class = "panel", @id = "NumberViewers" })
-                @Html.ValidationMessageFor(r => r.NumberViewers, "", new { @class = "text-danger" })
             </div>
 
         </div>
@@ -133,7 +120,7 @@
             @Html.ValidationMessageFor(r => r.RequestComments, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            <input id="Submit" type="submit" value="Submit" class="btn btn-default" />
+            <input id="Submit" type="submit" value="Submit" class="btn btn-default"/>
             
         </div>
 

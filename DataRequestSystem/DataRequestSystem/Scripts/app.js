@@ -1,6 +1,8 @@
-﻿var ViewModel = function () {
+﻿
+var ViewModel = function () {
     var self = this;
     self.requests = new ko.observableArray();
+
     self.currentElement = null;
     self.priorities = ["Low", "Normal", "Important", "Critical"];
     self.queueStatuses = ["New", "Ticket Pending"];
@@ -12,6 +14,20 @@
         'dateRequested': { 'from': ko.observable(null), 'to': ko.observable(null) },
         'dateWanted': { 'from': ko.observable(null), 'to': ko.observable(null) }
     };
+
+    self.edit = function edit() {
+        $(".editable").prop("readonly", false);
+        $(".selector").prop('disabled', false);
+    };
+    self.saveEdit = function saveEdit(data) {
+        $(".editable").prop("readonly", true);
+        $(".selector").prop('disabled', true);
+
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', data).done(function () {
+            window.location.href = "/Home/RequestQueue";
+        });
+        
+    }
 
     //self.filters.dateWanted.from(Date.now());
 
@@ -58,7 +74,6 @@
     self.getRequests = function getRequests() {
         ajaxHelper('/api/FormRequests/', 'GET').done(function (data) {
             self.requests([]);
-
             var i, length = data.length;
             for (i = 0; i < length; i++) {
                 self.requests.push(data[i]);
@@ -84,6 +99,7 @@
     };
 
     self.getRequests();
+    
 };
 
 
@@ -103,9 +119,9 @@ function ajaxHelper(uri, method, data) {
     });
 }
 var errorReminded = false;
-$(".btn").click(function () {
-
-    var request = {
+$("#Submit").click(function () {
+    //function add() {
+    var r = {
         "DateRequested": new Date().toLocaleDateString(),
         "DateWanted": $("#DateWanted").val(),
         "RequesterName": $("#RequesterName").val(),
@@ -128,13 +144,14 @@ $(".btn").click(function () {
         "filterToDate": new Date().toLocaleDateString()
     };
 
-    var json = JSON.stringify(request);
-    console.log("REQUEST: " + request);
+
+    var json = JSON.stringify(r);
+    console.log("REQUEST: " + r);
     console.log("Stringified: " + json);
     $.ajax({
         type: "POST",
         url: '/api/FormRequests/PostFormRequest',
-        data: JSON.stringify(request),
+        data: JSON.stringify(r),
         contentType: "application/json;charset=utf-8",
         success: function (data, status, xhr) {
             console.log("The result is : " + status + ": " + data);
@@ -142,7 +159,7 @@ $(".btn").click(function () {
         },
         error: function (xhr) {
             console.log(xhr.responseText);
-           
+
             var values = JSON.parse(xhr.responseText);
             var modelState = values.ModelState;
 
@@ -264,3 +281,4 @@ function StatusComparatorA(request1, request2) {
 function StatusComparatorD(request1, request2) {
     return StatusComparatorA(request1, request2) * -1;
 }
+
