@@ -220,12 +220,16 @@
                             <strong class="col-md-3">File Attached: </strong>
                             @*<a class="col-md-3" data-bind="attr: {href: $data.FileURL}, value: $data.FileName"></a>*@
                             @*<input class="col-md-3 editable" id="selectFile" accept="*" required="" type="file" multiple="" data-bind="attr: {href: $data.FileURLs}, value: $data.FileNames" readonly>*@
-                            <form class="fileInfo">
-                                <div>
-                                    <input class="span3" type="file" id="attachedFiles" style="display: none"/>
-                                    <input class="btn span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload" >
-                                    <input class="btn span3" type="button" data-bind="click: $root.addFile">
-
+                            <form class="alert alert-info fileInfo">
+                                <div class="col-md-3">
+                                    <input class="span3" type="file" id="attachedFiles" style="display: none" /> @*style="background-color: #8ac185" style="background-color: #ffa933"*@
+                                    <input class="btn btn-info span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Choose">
+                                    <input class="btn btn-info span3" type="button" data-bind="click: $root.addFile" value="Upload">
+                                </div>
+                                <div class="col-md-3">
+                                    <ul>
+                                        <li></li>
+                                    </ul>
                                 </div>
                             </form>
 

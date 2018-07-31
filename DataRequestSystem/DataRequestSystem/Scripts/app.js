@@ -64,30 +64,23 @@ var ViewModel = function () {
     };
 
     self.addFile = function addFile(data) {
-
-        console.log($("#attachedFiles")[0].files[0].name);
-
         var r = {
             "RequestId": data.Id,
             "Type": "File",
             "Name": $("#attachedFiles")[0].files[0].name,
             "URL": $("#attachedFiles").val(),
         };
-
-        $.ajax({
-            type: "POST",
-            url: '/api/Links/PostLinks',
-            data: JSON.stringify(r),
-            contentType: "application/json;charset=utf-8",
-            success: function (data, status, xhr) {
-                console.log("The result is : " + status + ": " + data);
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        });
+        ajaxHelper('/api/Links/PostLinks', 'POST', r);
     };
-
+    //self.addQuery = function addQuery(data) {
+    //    var r = {
+    //        "RequestId": data.Id,
+    //        "Type": "Query",
+    //        "Name": $("#attachedQueries")[0].files[0].name,
+    //        "URL": $("#attachedQueries").val(),
+    //    };
+    //    ajaxHelper('/api/Links/PostLinks', 'POST', r);
+    //};
     self.declineRequest = function declineRequest(data) {
 
     }
