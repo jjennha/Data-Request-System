@@ -78,6 +78,7 @@ namespace DataRequestSystem.Controllers
         {
             FormRequest newForm = new FormRequest
             {
+                Id = (formRequest.Id + 1),
                 DateRequested = DateTime.Now.ToLocalTime(),
                 DateWanted = formRequest.DateWanted,
                 RequesterName = formRequest.RequesterName,

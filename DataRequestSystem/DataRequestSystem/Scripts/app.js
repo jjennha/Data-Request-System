@@ -2,11 +2,19 @@
 var ViewModel = function () {
     var self = this;
     self.requests = new ko.observableArray();
+    self.testDate = ko.observable();
 
     self.currentElement = null;
     self.priorities = ["Low", "Normal", "Important", "Critical"];
     self.queueStatuses = ["New", "Ticket Pending"];
-    self.completeStatuses = ["Complete", "Denied"];
+    self.completeStatuses = ["Complete", "Declined"];
+    self.formatOptions = ["Excel", "Visualization (chart)", "CFV", "Other"];
+    self.statusColors = {
+        'New': 'white',
+        'Ticket Pending': '#ffff66',
+        'Complete': '#99ff66',
+        'Declined': '#ff9980'
+    }
 
     self.filters = {
         'priority': ko.observableArray([]),
@@ -16,19 +24,43 @@ var ViewModel = function () {
         'dateWanted': { 'from': ko.observable(null), 'to': ko.observable(null) }
     };
 
-    self.edit = function edit() {
-        $(".editable").prop("readonly", false);
-        $(".selector").prop('disabled', false);
+    self.edit = function edit(data, event) {
+        var target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+        var parent = target.parentElement;
+        var arr = parent.querySelectorAll('.editable');
+
+        var i, length = arr.length;
+        for (i = 0; i < length; i++) {
+            $(arr[i]).prop("readonly", false);
+        }
+
+        arr = parent.querySelectorAll('.selector');
+        length = arr.length;
+        for (i = 0; i < length; i++) {
+            $(arr[i]).prop("disabled", false);
+        }
     };
 
     self.saveEdit = function saveEdit(data) {
-        $(".editable").prop("readonly", true);
-        $(".selector").prop('disabled', true);
+        var target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+        var parent = target.parentElement;
+        var arr = parent.querySelectorAll('.editable');
 
+        var i, length = arr.length;
+        for (i = 0; i < length; i++) {
+            $(arr[i]).prop("readonly", true);
+        }
+
+        arr = parent.querySelectorAll('.selector');
+        length = arr.length;
+        for (i = 0; i < length; i++) {
+            $(arr[i]).prop("disabled", true);
+        }
+        console.log(data);
         ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', data).done(function () {
+            debugger;
             window.location.href = "/Home/RequestQueue";
         });
-
     };
 
     self.addFile = function addFile(data) {
@@ -56,7 +88,13 @@ var ViewModel = function () {
         });
     };
 
-    //self.filters.dateWanted.from(Date.now());
+    self.declineRequest = function declineRequest(data) {
+
+    }
+
+    self.completeRequest = function completeRequest(data) {
+
+    }
 
     self.matchesFilters = function matchesFilters(request) {
 
@@ -105,7 +143,7 @@ var ViewModel = function () {
             for (i = 0; i < length; i++) {
                 self.requests.push(data[i]);
             }
-
+            console.log(self.requests());
             self.requests.sort(DateRequestedComparatorA);
         });
     };
@@ -134,6 +172,27 @@ var ViewModel = function () {
             $(target).prev().val('');
         }
     }
+
+    ko.bindingHandlers.date = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) { 
+            var value = valueAccessor();
+            element.value = value.substring(0, 10);
+
+            ko.utils.registerEventHandler(element, "change", function () {
+                var value = valueAccessor();
+                value(new Date(element.value));
+                console.log(valueAccessor());
+                //value(new Date(element.value));
+            });
+        },
+
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            console.log('test');
+            var value = valueAccessor();
+            console.log(valueAccessor);
+            element.value = value.substring(0, 10);
+        }
+    };
 
     self.getRequests();
 
@@ -184,14 +243,13 @@ $("#Submit").click(function () {
         "RequestComments": $("#RequestComments").val(),
         "DatePulled": new Date().toLocaleDateString(),
         "CompletionStatus": "New",
-        "filterNDBuilders": $("filterNDBuilders").val(),
-        "filterOpenBuilders": $("filterOpenBuilders").val(),
-        "filterUSBuilders": $("filterUSBuilders").val(),
-        "filterOther": $("filterOther").val(),
+        "filterNDBuilders": $("#filterNDBuilders").is(':checked'),
+        "filterOpenBuilders": $("#filterOpenBuilders").is(':checked'),
+        "filterUSBuilders": $("#filterUSBuilders").is(':checked'),
+        "filterOther": $("#filterOther").val(),
         "filterFromDate": new Date().toLocaleDateString(),
         "filterToDate": new Date().toLocaleDateString()
     };
-
 
     var json = JSON.stringify(r);
     console.log("REQUEST: " + r);
