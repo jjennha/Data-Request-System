@@ -190,12 +190,12 @@
                                     <input class="span3" type="file" id="attachedFiles" style="display: none"/>
                                     <input class="btn span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload" >
                                     <input class="btn span3" type="button" data-bind="click: $root.addFile">
-                                    <ul data-bind="foreach: $data.">
-                                        @*@foreach(link)
+                                    @*<ul data-bind="foreach: $data.">
+                                        @foreach(link)
                                         {
 
-                                        }*@
-                                    </ul>
+                                        }
+                                    </ul>*@
 
                                 </div>
                             </form>
