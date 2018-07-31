@@ -139,10 +139,11 @@
 
                         <div class="row">
                             <strong class="col-md-3">Format: </strong>
-                            <select class="col-md-3 panel selector" data-bind="value: $data.Format, optionsCaption: $data.Format" disabled>
+                            <select class="col-md-3 panel selector" data-bind="optionsCaption: $data.Format, value: $data.Format" disabled>
                                 <option value="Excel">Excel</option>
                                 <option value="Visualization (chart)">Visualization (chart)</option>
                                 <option value="CFV">CFV</option>
+                                <option data-bind="value: $data.Format, text: $data.Format"></option>
                                 <option value="Other">Other</option>
                             </select>
 
@@ -182,7 +183,25 @@
 
                         <div class="row">
                             <strong class="col-md-3">File Attached: </strong>
-                            <a class="col-md-3" data-bind="attr: {href: $data.FileURL}, value: $data.FileName"></a>
+                            @*<a class="col-md-3" data-bind="attr: {href: $data.FileURL}, value: $data.FileName"></a>*@
+                            @*<input class="col-md-3 editable" id="selectFile" accept="*" required="" type="file" multiple="" data-bind="attr: {href: $data.FileURLs}, value: $data.FileNames" readonly>*@
+                            <form class="fileInfo">
+                                <div>
+                                    <input class="span3" type="file" id="attachedFiles" style="display: none"/>
+                                    <input class="btn span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload" >
+                                    <input class="btn span3" type="button" data-bind="click: $root.addFile">
+                                    <ul data-bind="foreach: $data.">
+                                        @*@foreach(link)
+                                        {
+
+                                        }*@
+                                    </ul>
+
+                                </div>
+                            </form>
+
+                            @*<input id="myInput" type="file" style="visibility:hidden" />
+                            <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
 
                             <strong class="col-md-3">SQL Queries: </strong>
                             <input class="col-md-3 panel editable" data-bind="value: $data.SQLQueries" readonly>

@@ -13,7 +13,7 @@ namespace DataRequestSystem.Models
 
         // Request
         public DateTime DateRequested { get; set; }
-
+ 
         //[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Pick Date")]
@@ -60,11 +60,11 @@ namespace DataRequestSystem.Models
         public string CompletionStatus { get; set; }
         public int TicketNumber { get; set; }
         public string TicketURL { get; set; }
-        public string SQLQueries { get; set; }
+        //public string SQLQueries { get; set; }
 
         // Completed Requests only
-        public string[] FileNames { get; set; }
-        public string[] FileURLs { get; set; }
+        //public string FileNames { get; set; }
+        //public string FileURLs { get; set; }
 
         //Filters
         public Boolean filterNDBuilders { get; set; }

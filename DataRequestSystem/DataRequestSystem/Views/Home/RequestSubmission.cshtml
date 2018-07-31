@@ -23,7 +23,7 @@
         @*@using (Html.BeginForm("AddRequestSubmission", "Home"))
             {*@
         @*<h2>Request Information</h2>*@
-        <div class="container-fluid left">
+        <div class="container left">
             <div class="form-group col1">
                 <h5>Requester Name</h5>
                 @Html.TextBoxFor(r => r.RequesterName, new { @class = "panel", @id = "RequesterName" })
@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <div class="container-fluid right">
+        <div class="container right">
             <div class="form-group">
                 <h5>Request(s)</h5>
                 @Html.TextAreaFor(r => r.Requests, new { @class = "panel", @id = "Requests" })
