@@ -2,7 +2,6 @@
 var ViewModel = function () {
     var self = this;
     self.requests = new ko.observableArray();
-    self.testDate = ko.observable();
 
     self.currentElement = null;
     self.priorities = ["Low", "Normal", "Important", "Critical"];
@@ -56,9 +55,10 @@ var ViewModel = function () {
         for (i = 0; i < length; i++) {
             $(arr[i]).prop("disabled", true);
         }
-        console.log(data);
-        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', data).done(function () {
-            debugger;
+
+        var convertedData = self.convertToDB(data);
+
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData).done(function () {
             window.location.href = "/Home/RequestQueue";
         });
     };
@@ -92,51 +92,118 @@ var ViewModel = function () {
     self.matchesFilters = function matchesFilters(request) {
 
         if (self.filters.priority() && self.filters.priority().length > 0 &&
-            self.filters.priority.indexOf(request.PriorityLevel) === -1) {
+            self.filters.priority.indexOf(request.PriorityLevel()) === -1) {
             return false;
         }
 
         if (self.filters.requester() && self.filters.requester().length > 0 &&
-            self.filters.requester.indexOf(request.RequesterName) === -1) {
+            self.filters.requester.indexOf(request.RequesterName()) === -1) {
             return false;
         }
 
         if (self.filters.status() && self.filters.status().length > 0 &&
-            self.filters.status.indexOf(request.CompletionStatus) === -1) {
+            self.filters.status.indexOf(request.CompletionStatus()) === -1) {
             return false;
         }
 
         if (self.filters.dateWanted.from() &&
-            new Date(self.filters.dateWanted.from()) > new Date(request.DateWanted)) {
+            new Date(self.filters.dateWanted.from()) > new Date(request.DateWanted())) {
             return false;
         }
 
         if (self.filters.dateWanted.to() &&
-            new Date(self.filters.dateWanted.to()) < new Date(request.DateWanted)) {
+            new Date(self.filters.dateWanted.to()) < new Date(request.DateWanted())) {
             return false;
         }
 
         if (self.filters.dateRequested.from() &&
-            new Date(self.filters.dateRequested.from()) > new Date(request.DateRequested)) {
+            new Date(self.filters.dateRequested.from()) > new Date(request.DateRequested())) {
             return false;
         }
 
         if (self.filters.dateRequested.to() &&
-            new Date(self.filters.dateRequested.to()) < new Date(request.DateRequested)) {
+            new Date(self.filters.dateRequested.to()) < new Date(request.DateRequested())) {
             return false;
         }
 
         return true;
     };
 
+    self.convertToDB = function convertToDB(request) {
+        var convertedRequest = {
+            "Id": request.Id,
+            "DateRequested": request.DateRequested,
+            "DateWanted": request.DateWanted(),
+            "RequesterName": request.RequesterName(),
+            "PriorityLevel": request.PriorityLevel(),
+            "NumberRequests": request.NumberRequests(),
+            "Requests": request.Requests(),
+            "UsageExplanation": request.UsageExplanation(),
+            "Format": request.Format(),
+            "Description": request.Description(),
+            "RequestComments": request.RequestComments(),
+            "Viewers": request.Viewers(),
+            "NumberViewers": request.NumberViewers(),
+            "DatePulled": request.DatePulled(),
+            "DataPulledBy": request.DataPulledBy(),
+            "DevComments": request.DevComments(),
+            "UncompletionReason": request.UncompletionReason(),
+            "CompletionStatus": request.CompletionStatus(),
+            "TicketNumber": request.TicketNumber(),
+            "TicketURL": request.TicketURL(),
+            "filterNDBuilders": request.filterNDBuilders(),
+            "filterOpenBuilders": request.filterOpenBuilders(),
+            "filterUSBuilders": request.filterUSBuilders(),
+            "filterOther": request.filterOther(),
+            "filterToDate": request.filterToDate(),
+            "filterFromDate": request.filterFromDate()
+        }
+
+        return convertedRequest;
+    }
+
+    self.convertFromDB = function convertFromDB(request) {
+        var convertedRequest = {
+            "Id": request.Id,
+            "DateRequested": request.DateRequested,
+            "DateWanted": new ko.observable(request.DateWanted),
+            "RequesterName": new ko.observable(request.RequesterName),
+            "PriorityLevel": new ko.observable(request.PriorityLevel),
+            "NumberRequests": new ko.observable(request.NumberRequests),
+            "Requests": new ko.observable(request.Requests),
+            "UsageExplanation": new ko.observable(request.UsageExplanation),
+            "Format": new ko.observable(request.Format),
+            "Description": new ko.observable(request.Description),
+            "RequestComments": new ko.observable(request.RequestComments),
+            "Viewers": new ko.observable(request.Viewers),
+            "NumberViewers": new ko.observable(request.NumberViewers),
+            "DatePulled": new ko.observable(request.DatePulled),
+            "DataPulledBy": new ko.observable(request.DataPulledBy),
+            "DevComments": new ko.observable(request.DevComments),
+            "UncompletionReason": new ko.observable(request.UncompletionReason),
+            "CompletionStatus": new ko.observable(request.CompletionStatus),
+            "TicketNumber": new ko.observable(request.TicketNumber),
+            "TicketURL": new ko.observable(request.TicketURL),
+            "filterNDBuilders": new ko.observable(request.filterNDBuilders),
+            "filterOpenBuilders": new ko.observable(request.filterOpenBuilders),
+            "filterUSBuilders": new ko.observable(request.filterUSBuilders),
+            "filterOther": new ko.observable(request.filterOther),
+            "filterToDate": new ko.observable(request.filterToDate),
+            "filterFromDate": new ko.observable(request.filterFromDate)
+        }
+
+        return convertedRequest;
+    }
+
     self.getRequests = function getRequests() {
         ajaxHelper('/api/FormRequests/', 'GET').done(function (data) {
-            self.requests([]);
+            self.requests();
+
             var i, length = data.length;
             for (i = 0; i < length; i++) {
-                self.requests.push(data[i]);
+                self.requests.push(self.convertFromDB(data[i]));
             }
-            console.log(self.requests());
+
             self.requests.sort(DateRequestedComparatorA);
         });
     };
@@ -167,23 +234,21 @@ var ViewModel = function () {
     }
 
     ko.bindingHandlers.date = {
-        init: function (element, valueAccessor, allBindingsAccessor, viewModel) { 
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var value = valueAccessor();
-            element.value = value.substring(0, 10);
+            element.value = value().substring(0, 10);
 
             ko.utils.registerEventHandler(element, "change", function () {
                 var value = valueAccessor();
                 value(new Date(element.value));
-                console.log(valueAccessor());
-                //value(new Date(element.value));
             });
         },
 
         update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            console.log('test');
             var value = valueAccessor();
-            console.log(valueAccessor);
-            element.value = value.substring(0, 10);
+            console.log(value);
+            console.log(value());
+            element.value = value().substring(0, 10);
         }
     };
 
@@ -328,8 +393,8 @@ function DateRequestedComparatorD(request1, request2) {
 }
 
 function DateWantedComparatorA(request1, request2) {
-    var date1 = new Date(request1.DateWanted);
-    var date2 = new Date(request2.DateWanted);
+    var date1 = new Date(request1.DateWanted());
+    var date2 = new Date(request2.DateWanted());
 
     if (date1 > date2) {
         return 1;
@@ -351,8 +416,8 @@ function PriorityComparatorA(request1, request2) {
         "Normal": 3,
         "Low": 4
     };
-    var priority1 = priorities[request1.PriorityLevel];
-    var priority2 = priorities[request2.PriorityLevel];
+    var priority1 = priorities[request1.PriorityLevel()];
+    var priority2 = priorities[request2.PriorityLevel()];
 
     priority1 = priority1 === undefined ? 5 : priority1;
     priority1 = priority1 === undefined ? 5 : priority1;
@@ -371,8 +436,8 @@ function PriorityComparatorD(request1, request2) {
 }
 
 function RequesterComparatorA(request1, request2) {
-    var requester1 = request1.RequesterName;
-    var requester2 = request2.RequesterName;
+    var requester1 = request1.RequesterName();
+    var requester2 = request2.RequesterName();
     if (requester1 > requester2) {
         return 1;
     } else if (requester2 > requester1) {
@@ -387,8 +452,8 @@ function RequesterComparatorD(request1, request2) {
 }
 
 function StatusComparatorA(request1, request2) {
-    var status1 = request1.CompletionStatus;
-    var status2 = request2.CompletionStatus;
+    var status1 = request1.CompletionStatus();
+    var status2 = request2.CompletionStatus();
 
     if (status1 > status2) {
         return 1;

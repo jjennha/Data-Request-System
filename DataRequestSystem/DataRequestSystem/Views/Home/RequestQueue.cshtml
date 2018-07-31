@@ -104,12 +104,12 @@
         <!-- Table headers end-->
 
         <div class="panel-group" data-bind="foreach: $root.requests">
-            <div" data-bind="if: $root.queueStatuses.indexOf($data.CompletionStatus) !== -1 && $root.matchesFilters($data)">
+            <div" data-bind="if: $root.queueStatuses.indexOf($data.CompletionStatus()) !== -1 && $root.matchesFilters($data)">
                 <div class="panel panel-default requestRow panel-heading collapsed row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse"
-                     data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }, style: { 'background-color': $root.statusColors[$data.CompletionStatus] }">
+                     data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }, style: { 'background-color': $root.statusColors[$data.CompletionStatus()] }">
 
                     <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
-                    <span class="col-md-2" data-bind="text: $data.DateWanted.substring(0, 10)"></span>
+                    <span class="col-md-2" data-bind="text: $data.DateWanted().substring(0, 10)"></span>
                     <span class="col-md-2" data-bind="text: $data.PriorityLevel"></span>
                     <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
                     <span class="col-md-2" data-bind="text: $data.CompletionStatus"></span>
@@ -123,26 +123,26 @@
 
                         <div class="row">
                             <strong class="col-md-3">Date Requested:</strong>
-                            <span class="col-md-3" data-bind="text:  $data.DateRequested.substring(0, 10)"></span>
-
+                            <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
+                            <div class="col-md-1"></div>
                             <strong class="col-md-3">Date Wanted By:</strong>
-                            <input class="col-md-3 panel editable" type="date" data-bind="value:  $data.DateWanted.substring(0, 10)" readonly>
+                            <input class="col-md-2 panel editable" type="date" data-bind="date: $data.DateWanted" readonly>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Requester Name:</strong>
-                            <input class="col-md-3 panel editable" data-bind="value: $data.RequesterName" readonly>
-
+                            <input class="col-md-2 panel editable" data-bind="value: $data.RequesterName" readonly>
+                            <div class="col-md-1"></div>
                             <strong class="col-md-3">Number of Requests: </strong>
-                            <input class="col-md-3 panel editable" data-bind="value: $data.NumberRequests" readonly>
+                            <input class="col-md-2 panel editable" data-bind="value: $data.NumberRequests" readonly>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Format: </strong>
-                            <select class="col-md-3 panel selector" data-bind="value: $data.Format, options: $root.formatOptions, optionsCaption: $data.Format" disabled></select>
-
+                            <select class="col-md-2 panel selector" data-bind="value: $data.Format, options: $root.formatOptions, optionsCaption: $data.Format" disabled></select>
+                            <div class="col-md-1"></div>
                             <strong class="col-md-3">Priority Level: </strong>
-                            <select class="col-md-3 panel selector" data-bind="value: $data.PriorityLevel, options: $root.priorities, optionsCaption: $data.PriorityLevel" disabled></select>
+                            <select class="col-md-2 panel selector" data-bind="value: $data.PriorityLevel, options: $root.priorities, optionsCaption: $data.PriorityLevel" disabled></select>
                         </div>
 
                         <div class="row">
@@ -157,7 +157,7 @@
 
                         <div class="row">
                             <strong class="col-md-3">Number of Viewers: </strong>
-                            <input class="col-md-3 editable panel" data-bind="value: $data.NumberViewers" readonly>
+                            <input class="col-md-2 editable panel" data-bind="value: $data.NumberViewers" readonly>
                         </div>
 
                         <div class="row">
@@ -173,20 +173,21 @@
                         <div class="row">
                             <strong class="col-md-3">Additional Comments: </strong>
                             <textarea class="col-md-8 editable" data-bind="value: $data.RequestComments" readonly></textarea>
-                        </div>
+                        </div><br />
 
                         <div class="row">
-                            <div class="col-md-3">
+                            <strong class="col-md-3">Requester Filters: </strong>
+                            <div class="col-md-2">
                                 <strong>Non-demo Builders: </strong>
                                 <input class="selector" data-bind="checked: $data.filterNDBuilders" type="checkbox" disabled>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <strong>Open Builders: </strong>
                                 <input class="selector" data-bind="checked: $data.filterOpenBuilders" type="checkbox" disabled>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <strong>US Builders: </strong>
                                 <input class="selector" data-bind="checked: $data.filterUSBuilders" type="checkbox" disabled>
                             </div>
@@ -199,21 +200,19 @@
 
                         <div class="row">
                             <strong class="col-md-3">Date Range: </strong>
-                            <input data-bind="value: $data.filterFromDate" class="col-md-2 panel editable" type="date" readonly/>
+                            <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" readonly/>
                             <strong class="col-md-1"> To </strong>
-                            <input data-bind="" class="col-md-2 panel editable" type="date" readonly/>
+                            <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" readonly/>
                         </div>
-
-                        <button data-bind="click: function() { console.log($data.filterToDate); }">test</button>
 
                         <h4>Developer Notes</h4>
 
                         <div class="row">
                             <strong class="col-md-3">Data Pulled By: </strong>
-                            <input class="col-md-3 panel editable" data-bind="value: $data.DataPulledBy" readonly>
-
+                            <input class="col-md-2 panel editable" data-bind="value: $data.DataPulledBy" readonly>
+                            <div class="col-md-1"></div>
                             <strong class="col-md-3">Date Pulled: </strong>
-                            <input class="col-md-3 panel editable" type="date" data-bind="value:  $data.DatePulled.substring(0, 10)" readonly>
+                            <input class="col-md-2 panel editable" type="date" data-bind="date: $data.DatePulled" readonly>
                         </div>
 
                         <div class="row">
@@ -242,7 +241,7 @@
 
                         <div class="row">
                             <strong class="col-md-3">Completion Status: </strong>
-                            <select class="col-md-3 panel selector" data-bind="value: $data.CompletionStatus, options: $root.queueStatuses, optionsCaption: $data.CompletionStatus" disabled></select>
+                            <select class="col-md-3 panel selector" data-bind="value: $data.CompletionStatus, options: $root.queueStatuses, optionsCaption: $data.CompletionStatus()" disabled></select>
 
                             <strong class="col-md-3">Ticket: </strong>
                             <a class="col-md-1" data-bind="attr: {href: $data.TicketURL}, value: $data.TicketNumber"></a>

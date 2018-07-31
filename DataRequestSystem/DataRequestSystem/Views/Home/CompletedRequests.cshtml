@@ -74,12 +74,12 @@
         <!-- Table headers end-->
 
         <div class="panel-group" data-bind="foreach: $root.requests">
-            <div" data-bind="if: $root.completeStatuses.indexOf($data.CompletionStatus) !== -1 && $root.matchesFilters($data)">
+            <div" data-bind="if: $root.completeStatuses.indexOf($data.CompletionStatus()) !== -1 && $root.matchesFilters($data)">
                 <div class="panel panel-default requestRow panel-heading collapsed row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse"
-                     data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }, style: { 'background-color': $root.statusColors[$data.CompletionStatus] }">
+                     data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }, style: { 'background-color': $root.statusColors[$data.CompletionStatus()] }">
 
                     <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
-                    <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
+                    <span class="col-md-2" data-bind="text: $data.DateWanted().substring(0, 10)"></span>
                     <span class="col-md-2" data-bind="text: $data.CompletionStatus"></span>
                     <textarea class="col-md-3" data-bind="text: $data.Description" readonly></textarea>
                     <a class="col-md-1" data-bind="attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
@@ -93,10 +93,10 @@
                         <button data-bind="click: function(data) { console.log($root.statusColors[data.CompletionStatus]); }"></button>
                         <div class="row">
                             <strong class="col-md-3">Date Requested:</strong>
-                            <span class="col-md-3" data-bind="text:  $data.DateRequested.substring(0, 10)"></span>
+                            <span class="col-md-3" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
 
                             <strong class="col-md-3">Date Wanted By:</strong>
-                            <span class="col-md-3" data-bind="text:  $data.DateWanted.substring(0, 10)"></span>
+                            <span class="col-md-3" data-bind="date:  $data.DateWanted"></span>
                         </div>
 
                         <div class="row">
@@ -126,8 +126,52 @@
                         </div>
 
                         <div class="row">
+                            <strong class="col-md-3">Number of Viewers: </strong>
+                            <input class="col-md-3 editable panel" data-bind="value: $data.NumberViewers" readonly>
+                        </div>
+
+                        <div class="row">
+                            <strong class="col-md-3">Viewers: </strong>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.Viewers" readonly></textarea>
+                        </div>
+
+                        <div class="row">
+                            <strong class="col-md-3">Usage Explanation: </strong>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.UsageExplanation" readonly></textarea>
+                        </div>
+
+                        <div class="row">
                             <strong class="col-md-3">Additional Comments: </strong>
-                            <textarea class="col-md-8" data-bind="text: $data.RequestComments" readonly></textarea>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.RequestComments" readonly></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Non-demo Builders: </strong>
+                                <input class="selector" data-bind="checked: $data.filterNDBuilders" type="checkbox" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>Open Builders: </strong>
+                                <input class="selector" data-bind="checked: $data.filterOpenBuilders" type="checkbox" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>US Builders: </strong>
+                                <input class="selector" data-bind="checked: $data.filterUSBuilders" type="checkbox" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>Other: </strong>
+                                <input class="editable panel" data-bind="checked: $data.filterOther" type="text" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <strong class="col-md-3">Date Range: </strong>
+                            <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" readonly />
+                            <strong class="col-md-1"> To </strong>
+                            <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" readonly />
                         </div>
 
                         <h4>Developer Notes</h4>
@@ -137,7 +181,7 @@
                             <span class="col-md-3" data-bind="text: $data.RequesterName"></span>
 
                             <strong class="col-md-3">Date Pulled: </strong>
-                            <span class="col-md-3" data-bind="text: $data.DatePulled.substring(0, 10)"></span>
+                            <span class="col-md-3" data-bind="date: $data.DatePulled"></span>
                         </div>
 
                         <div class="row">
