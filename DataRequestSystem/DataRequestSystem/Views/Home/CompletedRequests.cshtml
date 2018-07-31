@@ -74,9 +74,9 @@
         <!-- Table headers end-->
 
         <div class="panel-group" data-bind="foreach: $root.requests">
-            <div" data-bind="if: $data.CompletionStatus === 'Complete' && $root.matchesFilters($data)">
+            <div" data-bind="if: $root.completeStatuses.indexOf($data.CompletionStatus) !== -1 && $root.matchesFilters($data)">
                 <div class="panel panel-default requestRow panel-heading collapsed row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse"
-                     data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }">
+                     data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }, style: { 'background-color': $root.statusColors[$data.CompletionStatus] }">
 
                     <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
                     <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
@@ -90,7 +90,7 @@
                 <div class="collapse" data-bind="attr: { id: ('collapse' + $data.Id) }">
                     <div class="panel-body">
                         <h4>Requested Information</h4>
-
+                        <button data-bind="click: function(data) { console.log($root.statusColors[data.CompletionStatus]); }"></button>
                         <div class="row">
                             <strong class="col-md-3">Date Requested:</strong>
                             <span class="col-md-3" data-bind="text:  $data.DateRequested.substring(0, 10)"></span>
