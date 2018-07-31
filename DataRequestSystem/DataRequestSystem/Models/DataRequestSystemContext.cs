@@ -20,5 +20,7 @@ namespace DataRequestSystem.Models
         }
 
         public System.Data.Entity.DbSet<DataRequestSystem.Models.FormRequest> FormRequests { get; set; }
+
+        public System.Data.Entity.DbSet<DataRequestSystem.Models.Links> Links { get; set; }
     }
 }

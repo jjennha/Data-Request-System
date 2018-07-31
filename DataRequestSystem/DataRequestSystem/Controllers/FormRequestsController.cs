@@ -78,6 +78,7 @@ namespace DataRequestSystem.Controllers
         {
             FormRequest newForm = new FormRequest
             {
+                Id = (formRequest.Id + 1),
                 DateRequested = DateTime.Now.ToLocalTime(),
                 DateWanted = formRequest.DateWanted,
                 RequesterName = formRequest.RequesterName,
@@ -91,11 +92,11 @@ namespace DataRequestSystem.Controllers
                 DatePulled = DateTime.Now.ToLocalTime(),
                 DataPulledBy = formRequest.DataPulledBy,
                 DevComments = formRequest.DevComments,
-                FileName = formRequest.FileName,
-                FileURL = formRequest.FileURL,
+                //FileNames = formRequest.FileNames,
+                //FileURLs = formRequest.FileURLs,
                 CompletionStatus = formRequest.CompletionStatus,
                 UncompletionReason = formRequest.UncompletionReason,
-                SQLQueries = formRequest.SQLQueries,
+                //SQLQueries = formRequest.SQLQueries,
                 TicketNumber = formRequest.TicketNumber,
                 TicketURL = formRequest.TicketURL,
                 Description = formRequest.Description,

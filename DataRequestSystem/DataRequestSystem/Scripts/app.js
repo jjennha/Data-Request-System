@@ -61,7 +61,32 @@ var ViewModel = function () {
             debugger;
             window.location.href = "/Home/RequestQueue";
         });
-    }
+    };
+
+    self.addFile = function addFile(data) {
+
+        console.log($("#attachedFiles")[0].files[0].name);
+
+        var r = {
+            "RequestId": data.Id,
+            "Type": "File",
+            "Name": $("#attachedFiles")[0].files[0].name,
+            "URL": $("#attachedFiles").val(),
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Links/PostLinks',
+            data: JSON.stringify(r),
+            contentType: "application/json;charset=utf-8",
+            success: function (data, status, xhr) {
+                console.log("The result is : " + status + ": " + data);
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    };
 
     self.declineRequest = function declineRequest(data) {
 
@@ -118,7 +143,7 @@ var ViewModel = function () {
             for (i = 0; i < length; i++) {
                 self.requests.push(data[i]);
             }
-
+            console.log(self.requests());
             self.requests.sort(DateRequestedComparatorA);
         });
     };
@@ -170,7 +195,7 @@ var ViewModel = function () {
     };
 
     self.getRequests();
-    
+
 };
 
 
@@ -190,6 +215,17 @@ function ajaxHelper(uri, method, data) {
     });
 }
 var errorReminded = false;
+var formatID = "#Format";
+$("#Format").click(function () {
+    if ($("#Format").val() === "Other") {
+        //$("#otherFormat").click(function () {
+        $("#otherFormat").css("visibility", "visible");
+        formatID = "#otherFormatVal";
+    } else {
+        $("#otherFormat").css("visibility", "hidden");
+        formatID = "#Format";
+    }
+});
 $("#Submit").click(function () {
     //function add() {
     var r = {
@@ -247,17 +283,13 @@ $("#Submit").click(function () {
 
 
 });
-var formatID = "#Format";
-$("#Format").click(function () {
-    if ($("#Format").val() === "Other") {
-        //$("#otherFormat").click(function () {
-        $("#otherFormat").css("visibility", "visible");
-        formatID = "#otherFormatVal";
-    } else {
-        $("#otherFormat").css("visibility", "hidden");
-        formatID = "#Format";
-    }
-});
+
+//$("#selectFile").click(function () {
+
+
+//})
+
+
 
 document.addEventListener("click", function (event) {
     var openDropdown = $('.dropdown.open');
@@ -377,4 +409,5 @@ function StatusComparatorA(request1, request2) {
 function StatusComparatorD(request1, request2) {
     return StatusComparatorA(request1, request2) * -1;
 }
+
 
