@@ -11,12 +11,22 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
 using DataRequestSystem.Models;
+//using System.DirectoryServices.DirectorySearcher;
 
 namespace DataRequestSystem.Controllers
 {
     public class FormRequestsController : ApiController
     {
         private DataRequestSystemContext db = new DataRequestSystemContext();
+
+        // GET: api/
+        [System.Web.Http.Route("api/getDirectory")]
+        public Task<IHttpActionResult> getDirectory()
+        {
+            //DirectorySearcher directorySearch = new DirectorySearcher();
+
+            //return Ok();
+        }
 
         // GET: api/FormRequests
         public IQueryable<FormRequest> GetFormRequests()

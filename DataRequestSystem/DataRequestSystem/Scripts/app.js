@@ -3,9 +3,19 @@ var ViewModel = function () {
     var self = this;
     self.requests = new ko.observableArray();
     
-    self.mailSubject = "Test subject";
-    self.mailBody = "Test body";
-    self.mailUrl = 'mailto:test@example.com?subject=' + self.mailSubject + '&body=' + self.mailBody;
+    self.mailUrlPt1 = 'mailto:';
+    self.mailUrlPt2 = '?subject=Data Request ';
+    self.mailUrlPt3 = '&body=Hi ';
+    self.mailBody = ",%0D%0A%0D%0AYour data request is complete.%0D%0A%0D%0AYou can go out gere to view. In the last column is the requested information, and if you click" +
+        " the row the request is in, you can see more information on how we got to those results in Developer Notes and Additional Comments sections.%0D%0A" +
+        "[insert link to completed request page here]%0D%0A%0D%0APlease let the Data Science Team know if you have any questions!%0D%0A%0D%0AThanks!";
+
+    self.generateEmail = function generateEmail(data) {
+        return (self.mailUrlPt1 + 'test@example.com' +
+            self.mailUrlPt2 + data.Id +
+            self.mailUrlPt3 + data.RequesterName().split(' ')[0] +
+            self.mailBody);
+    }
 
     self.currentElement = null;
     self.priorities = ["Low", "Normal", "Important", "Critical"];

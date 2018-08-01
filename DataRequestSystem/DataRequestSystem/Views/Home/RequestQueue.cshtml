@@ -265,7 +265,7 @@
 
                             <button class="btn col-md-1" data-bind="click: $root.declineRequest">Decline</button>
 
-                            <form id="completeForm" class="col-md-1" data-bind="attr: {action: $root.mailUrl}" method="post" enctype="text/plain">
+                            <form id="completeForm" class="col-md-1" data-bind="attr: {action: $root.generateEmail($data)}" method="post" enctype="text/plain">
                                 <input class="btn" type="submit" value="Complete">
                             </form>
                         </div>
