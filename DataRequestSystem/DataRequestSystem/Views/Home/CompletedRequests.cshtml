@@ -187,20 +187,20 @@
 
                         <div class="row">
                             <strong class="col-md-3">File Attached: </strong>
-                            @*<a class="col-md-3" data-bind="attr: {href: $data.FileURL}, value: $data.FileName"></a>*@
-                            @*<input class="col-md-3 editable" id="selectFile" accept="*" required="" type="file" multiple="" data-bind="attr: {href: $data.FileURLs}, value: $data.FileNames" readonly>*@
-                            <form class="fileInfo">
-                                <div>
-                                    <input class="span3" type="file" id="attachedFiles" style="display: none" />
-                                    <input class="btn span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload">
-                                    <input class="btn span3" type="button" data-bind="click: $root.addFile">
-
+                            <form class="alert alert-info fileInfo">
+                                <div class="col-md-9" id="fileStuff">
+                                    <input class="span3" type="file" id="attachedFiles" style="display: none" onchange="dothis(); $('#addFile').click();" />
+                                    <input class="btn btn-info span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Choose">
+                                    <input class="btn btn-info span3" id="addFile" style="display: none" type="button" data-bind="click: $root.addFile" value="Upload">
+                                    <ul class="span3" id="linkNames" data-bind="foreach: $data.LinksList">
+                                        <li><a data-bind="text: $data.Name, attr: {href: $data.URL}"></a></li>
+                                    </ul>
                                 </div>
                             </form>
+  
+                        </div>
 
-                            @*<input id="myInput" type="file" style="visibility:hidden" />
-            <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
-
+                        <div class="row">
                             <strong class="col-md-3">SQL Queries: </strong>
                             <input class="col-md-2 panel editable" data-bind="value: $data.SQLQueries" disabled>
                         </div>
@@ -233,7 +233,7 @@
                             <div class="col-md-7"></div>
 
                             <form col-md-1>
-                                <input class="btn" data-bind="click: $root.reopenRequest", value="Reopen">
+                                <input class="btn" data-bind="click: $root.reopenRequest" , value="Reopen">
                             </form>
                         </div>
 

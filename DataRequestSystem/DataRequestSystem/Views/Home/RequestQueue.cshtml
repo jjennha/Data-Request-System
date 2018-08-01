@@ -139,15 +139,9 @@
 
                         <div class="row" style="display: inline">
                             <strong class="col-md-3">Format: </strong>
-<<<<<<< HEAD
-                            <select class="col-md-2 panel editable" data-bind="value: $data.Format, options: $root.formatOptions, optionsCaption: $data.Format" disabled></select>
-                            <div class="col-md-1"></div>
-                            <strong class="col-md-3">Priority Level: </strong>
-                            <select class="col-md-2 panel editable" data-bind="value: $data.PriorityLevel, options: $root.priorities, optionsCaption: $data.PriorityLevel" disabled></select>
-=======
+
                             <input class="panel editable" data-bind="value: $data.OtherFormat">
-                            <select class=" panel selector" id="Format" data-bind="placeholder:$data.OtherFormat , value: $data.Format, options: $root.formatOptions, click: $root.addOther" style="visibility: visible">
-                            </select>
+                            <select class=" panel editable" id="Format" data-bind="placeholder:$data.OtherFormat , value: $data.Format, options: $root.formatOptions, click: $root.addOther" style="visibility: visible"></select>
                             <input class="panel editable" id="otherFormatVal" data-bind="value: $data.OtherFormat" style="visibility: hidden" />
 
                         </div>
@@ -158,11 +152,10 @@
                             <strong class="col-md-3">Priority Level: </strong>
                             <select class="col-md-2 panel selector" data-bind="value: $data.PriorityLevel, options: $root.priorities, optionsCaption: $data.PriorityLevel" disabled></select>
 
->>>>>>> master
                         </div>
                         <div class="row" style="visibility: hidden" id="otherFormat">
                             @*<strong class="col-md-3">Other Format: </strong>
-                            <input class="panel editable" id="otherFormatVal" data-bind="value: $data.OtherFormat" />*@
+                                <input class="panel editable" id="otherFormatVal" data-bind="value: $data.OtherFormat" />*@
 
                         </div>
                         <div class="row">
@@ -220,15 +213,10 @@
 
                         <div class="row">
                             <strong class="col-md-3">Date Range: </strong>
-<<<<<<< HEAD
+
                             <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" disabled />
                             <strong class="col-md-1"> To </strong>
                             <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" disabled />
-=======
-                            <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" readonly />
-                            <strong class="col-md-1"> To </strong>
-                            <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" readonly />
->>>>>>> master
                         </div>
 
                         <h4>Developer Notes</h4>
@@ -243,26 +231,20 @@
 
                         <div class="row">
                             <strong class="col-md-3">File Attached: </strong>
-
                             <form class="alert alert-info fileInfo">
                                 <div class="col-md-9" id="fileStuff">
-
                                     <input class="span3" type="file" id="attachedFiles" style="display: none" onchange="dothis(); $('#addFile').click();" />
                                     <input class="btn btn-info span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Choose">
                                     <input class="btn btn-info span3" id="addFile" style="display: none" type="button" data-bind="click: $root.addFile" value="Upload">
-
                                     <ul class="span3" id="linkNames" data-bind="foreach: $data.LinksList">
                                         <li><a data-bind="text: $data.Name, attr: {href: $data.URL}"></a></li>
                                     </ul>
                                 </div>
-
                             </form>
-
                             @*<input id="myInput" type="file" style="visibility:hidden" />
-            <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
-
+                                <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
                             <strong class="col-md-3">SQL Queries: </strong>
-                            <input class="col-md-2 panel editable" data-bind="value: $data.SQLQueries" disabled>
+                            <input class="col-md-3 panel editable" data-bind="value: $data.SQLQueries" readonly>
                         </div>
 
                         <div class="row">
@@ -295,7 +277,7 @@
 
                             <button class="btn col-md-1" data-bind="click: $root.declineRequest">Decline</button>
 
-                            <form id="completeForm" class="col-md-1" data-bind="attr: {action: $root.generateEmail($data)}" method="post" enctype="text/plain">
+                            <form id="completeForm" class="col-md-1" data-bind="attr: {action: $root.completeRequest($data)}" method="post" enctype="text/plain">
                                 <input class="btn" type="submit" value="Complete">
                             </form>
                         </div>

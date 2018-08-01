@@ -30,7 +30,11 @@ var ViewModel = function () {
         " the row the request is in, you can see more information on how we got to those results in Developer Notes and Additional Comments sections.%0D%0A" +
         "[insert link to completed request page here]%0D%0A%0D%0APlease let the Data Science Team know if you have any questions!%0D%0A%0D%0AThanks!";
 
-    self.generateEmail = function generateEmail(data) {
+    self.completeRequest = function completeRequest(data) {
+        data.CompletionStatus = ko.observable('Complete');
+        var convertedData = self.convertToDB(data);
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
+
         return (self.mailUrlPt1 + 'test@example.com' +
             self.mailUrlPt2 + data.Id +
             self.mailUrlPt3 + data.RequesterName().split(' ')[0] +
@@ -126,12 +130,6 @@ var ViewModel = function () {
 
     self.declineRequest = function declineRequest(data) {
         data.CompletionStatus('Declined');
-        var convertedData = self.convertToDB(data);
-        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
-    }
-
-    self.completeRequest = function completeRequest(data) {
-       // data.CompletionStatus('Complete'); window.open('mailto:test@example.com?subject=' + subject + '&body=' + body);
         var convertedData = self.convertToDB(data);
         ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
     }
