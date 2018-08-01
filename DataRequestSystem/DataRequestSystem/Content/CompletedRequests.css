@@ -119,5 +119,17 @@
             position: static;
         }
 .fileInfo {
-    height: 48px;
+    height:48px;
+}
+
+#fileStuff {
+    padding-left: 0;
+    display: -webkit-inline-box;
+}
+#linkNames {
+    list-style-type: none;
+    display: inline-flex;
+}
+#linkNames li {
+    padding: 0;
 }

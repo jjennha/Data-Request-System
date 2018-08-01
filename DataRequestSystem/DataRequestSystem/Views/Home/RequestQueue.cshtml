@@ -137,14 +137,27 @@
                             <input class="col-md-2 panel editable" data-bind="value: $data.NumberRequests" readonly>
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="display: inline">
                             <strong class="col-md-3">Format: </strong>
-                            <select class="col-md-2 panel selector" data-bind="value: $data.Format, options: $root.formatOptions, optionsCaption: $data.Format" disabled></select>
-                            <div class="col-md-1"></div>
+                            <input class="panel editable" data-bind="value: $data.OtherFormat">
+                            <select class=" panel selector" id="Format" data-bind="placeholder:$data.OtherFormat , value: $data.Format, options: $root.formatOptions, click: $root.addOther" style="visibility: visible">
+                            </select>
+                            <input class="panel editable" id="otherFormatVal" data-bind="value: $data.OtherFormat" style="visibility: hidden" />
+
+                        </div>
+                        <div class="row">
+
+                        </div>
+                        <div class="row">
                             <strong class="col-md-3">Priority Level: </strong>
                             <select class="col-md-2 panel selector" data-bind="value: $data.PriorityLevel, options: $root.priorities, optionsCaption: $data.PriorityLevel" disabled></select>
-                        </div>
 
+                        </div>
+                        <div class="row" style="visibility: hidden" id="otherFormat">
+                            @*<strong class="col-md-3">Other Format: </strong>
+                            <input class="panel editable" id="otherFormatVal" data-bind="value: $data.OtherFormat" />*@
+
+                        </div>
                         <div class="row">
                             <strong class="col-md-3">Request(s): </strong>
                             <textarea class="editable" data-bind="value: $data.Requests" readonly></textarea>
@@ -200,9 +213,9 @@
 
                         <div class="row">
                             <strong class="col-md-3">Date Range: </strong>
-                            <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" readonly/>
+                            <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" readonly />
                             <strong class="col-md-1"> To </strong>
-                            <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" readonly/>
+                            <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" readonly />
                         </div>
 
                         <h4>Developer Notes</h4>
@@ -217,23 +230,23 @@
 
                         <div class="row">
                             <strong class="col-md-3">File Attached: </strong>
-                            @*<a class="col-md-3" data-bind="attr: {href: $data.FileURL}, value: $data.FileName"></a>*@
-                            @*<input class="col-md-3 editable" id="selectFile" accept="*" required="" type="file" multiple="" data-bind="attr: {href: $data.FileURLs}, value: $data.FileNames" readonly>*@
                             <form class="alert alert-info fileInfo">
-                                <div class="col-md-3">
-                                    <input class="span3" type="file" id="attachedFiles" style="display: none" /> @*style="background-color: #8ac185" style="background-color: #ffa933"*@
+                                <div class="col-md-9" id="fileStuff">
+
+                                    <input class="span3" type="file" id="attachedFiles" style="display: none" onchange="dothis(); $('#addFile').click();" />
                                     <input class="btn btn-info span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Choose">
-                                    <input class="btn btn-info span3" type="button" data-bind="click: $root.addFile" value="Upload">
-                                </div>
-                                <div class="col-md-3">
-                                    <ul>
-                                        <li></li>
+                                    <input class="btn btn-info span3" id="addFile" style="display: none" type="button" data-bind="click: $root.addFile" value="Upload">
+
+                                    <ul class="span3" id="linkNames" data-bind="foreach: $data.LinksList">
+                                        <li><a data-bind="text: $data.Name, attr: {href: $data.URL}"></a></li>
                                     </ul>
+
                                 </div>
+
                             </form>
 
                             @*<input id="myInput" type="file" style="visibility:hidden" />
-                            <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
+            <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
 
                             <strong class="col-md-3">SQL Queries: </strong>
                             <input class="col-md-3 panel editable" data-bind="value: $data.SQLQueries" readonly>
@@ -261,8 +274,8 @@
                         <button class="btn" id="saveEdits" data-bind="click: $root.saveEdit">Save</button>
                         <button class="btn" data-bind="click: $root.declineRequest">Decline</button>
                         <button class="btn" data-bind="click: $root.completeRequest">Complete</button>
-                    </div> 
-    
+                    </div>
+
                 </div>
                 <!-- COLLAPSIBLE INFO END -->
             </div">
@@ -271,3 +284,17 @@
         </div>
     </div>
 </body>
+
+<div class="modal fade" id="successSaveMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h3>Saved!</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="successOk2" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
