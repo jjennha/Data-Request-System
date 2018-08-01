@@ -21,7 +21,7 @@
     <div id="form">
         <h2>Data Request Submission</h2>
         @*@using (Html.BeginForm("AddRequestSubmission", "Home"))
-            {*@
+        {*@
         @*<h2>Request Information</h2>*@
         <div class="container left">
             <div class="form-group col1">
@@ -77,9 +77,9 @@
             <div class="form-group filter">
                 <h5>Other: </h5>
                 @Html.TextBoxFor(r => r.filterOther, new { @class = "panel", @id = "filterOther" })
-               
+
             </div>
-            
+
         </div>
         <div class="mid2">
             <div class="form-group filter filterDate">
@@ -119,37 +119,50 @@
             @Html.TextAreaFor(r => r.RequestComments, new { @class = "panel", @id = "RequestComments" })
             @Html.ValidationMessageFor(r => r.RequestComments, "", new { @class = "text-danger" })
         </div>
+
         <div class="form-group">
             <input id="Submit" type="submit" value="Submit" class="btn btn-default"/>
-            
         </div>
 
+        <div class="modal fade" id="successMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    
+                    <div class="modal-body">
+                        <h3>Submitted!</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="successOk" data-dismiss="modal">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @*<h2>Developer notes</h2>
-            <div class="form-group">
-                <h5>Date Pulled</h5>
-                @Html.TextBoxFor(r => r.DatePulled, new { @class = "form-control", type = "date" })
-            </div>
-            <div class="form-group">
-                <h5>Date Pulled By</h5>
-                @Html.TextBoxFor(r => r.DataPulledBy, new { @class = "form-control", type = "date" })
-            </div>
-            <div class="form-group">
-                <h5>Additional Comments</h5>
-                @Html.TextAreaFor(r => r.DevComments)
-            </div>
-            <div class="form-group">
-                <h5>Files Attached</h5>
-                @Html.TextAreaFor(r => r.FileName)
-            </div>
-            <div class="form-group">
-                <h5>Completion Status</h5>
-                @Html.TextAreaFor(r => r.CompletionStatus)
-            </div>
-            <div class="form-group">
-                <h5>Reason if not complete</h5>
-                @Html.TextAreaFor(r => r.UncompletionReason)
-            </div>*@
+        <div class="form-group">
+            <h5>Date Pulled</h5>
+            @Html.TextBoxFor(r => r.DatePulled, new { @class = "form-control", type = "date" })
+        </div>
+        <div class="form-group">
+            <h5>Date Pulled By</h5>
+            @Html.TextBoxFor(r => r.DataPulledBy, new { @class = "form-control", type = "date" })
+        </div>
+        <div class="form-group">
+            <h5>Additional Comments</h5>
+            @Html.TextAreaFor(r => r.DevComments)
+        </div>
+        <div class="form-group">
+            <h5>Files Attached</h5>
+            @Html.TextAreaFor(r => r.FileName)
+        </div>
+        <div class="form-group">
+            <h5>Completion Status</h5>
+            @Html.TextAreaFor(r => r.CompletionStatus)
+        </div>
+        <div class="form-group">
+            <h5>Reason if not complete</h5>
+            @Html.TextAreaFor(r => r.UncompletionReason)
+        </div>*@
 
 
         @*}*@

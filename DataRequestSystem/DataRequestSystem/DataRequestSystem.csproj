@@ -159,9 +159,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807311559091_stanley.cs" />
-    <Compile Include="Migrations\201807311559091_stanley.Designer.cs">
-      <DependentUpon>201807311559091_stanley.cs</DependentUpon>
+    <Compile Include="Migrations\201807311643016_stanley.cs" />
+    <Compile Include="Migrations\201807311643016_stanley.Designer.cs">
+      <DependentUpon>201807311643016_stanley.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataRequestSystemContext.cs" />
@@ -231,8 +231,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807311559091_stanley.resx">
-      <DependentUpon>201807311559091_stanley.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807311643016_stanley.resx">
+      <DependentUpon>201807311643016_stanley.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

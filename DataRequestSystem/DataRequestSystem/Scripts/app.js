@@ -1,4 +1,24 @@
-﻿
+﻿function link(url, name, type) {
+    //var self = this;
+    this.Name = new ko.observable(name);
+    this.URL = new ko.observable(url);
+    this.Type = new ko.observable(type);
+}
+
+function dothis() {
+    console.log("hi");
+    var fileName = $("#attachedFiles")[0].files[0].name;
+    $("#linkNames").append(fileName);
+    console.log(fileName);
+}
+
+ko.bindingHandlers.placeholder = {
+    init: function (element, valueAccessor, allBindingsAccessor) {
+        var underlyingObservable = valueAccessor();
+        ko.applyBindingsToNode(element, { attr: { placeholder: underlyingObservable } });
+    }
+};
+
 var ViewModel = function () {
     var self = this;
     self.requests = new ko.observableArray();
@@ -21,6 +41,7 @@ var ViewModel = function () {
     self.priorities = ["Low", "Normal", "Important", "Critical"];
     self.queueStatuses = ["New", "In-progress", "Ticket Pending"];
     self.completeStatuses = ["Complete", "Declined"];
+    self.formatOptions = ["Excel", "Visualization (chart)", "CFV", "Other"];
     self.formatOptions = ["Excel", "Visualization (chart)", "CFV", "Other"];
     self.statusColors = {
         'New': '#ffff66',
@@ -46,6 +67,10 @@ var ViewModel = function () {
         for (i = 0; i < length; i++) {
             $(arr[i]).prop("disabled", false);
         }
+
+       
+        $("#Format").css("visibility", "visible");
+        
     };
 
     self.saveEdit = function saveEdit(data) {
@@ -62,34 +87,35 @@ var ViewModel = function () {
             data.CompletionStatus('In-progress');
         }
 
+        $("#Format").css("visibility", "hidden");
         var convertedData = self.convertToDB(data);
 
-        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
+        //ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
+
+        $.ajax({
+            type: "PUT",
+            url: "/api/FormRequests/" + data.Id,
+            data: JSON.stringify(convertedData),
+            contentType: "application/json;charset=utf-8",
+            success: function (convertedData, status, xhr) {
+                console.log("The result is : " + status + ": " + convertedData);
+                $("#successSaveMessage").modal('show');
+            },
+            error: function (xhr) {
+
+
+            }
+        });
     };
 
     self.addFile = function addFile(data) {
-
-        console.log($("#attachedFiles")[0].files[0].name);
-
         var r = {
             "RequestId": data.Id,
             "Type": "File",
             "Name": $("#attachedFiles")[0].files[0].name,
             "URL": $("#attachedFiles").val(),
         };
-
-        $.ajax({
-            type: "POST",
-            url: '/api/Links/PostLinks',
-            data: JSON.stringify(r),
-            contentType: "application/json;charset=utf-8",
-            success: function (data, status, xhr) {
-                console.log("The result is : " + status + ": " + data);
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        });
+        ajaxHelper('/api/Links/PostLinks', 'POST', r);
     };
 
     self.reopenRequest = function reopenRequest(data) {
@@ -167,16 +193,21 @@ var ViewModel = function () {
     };
 
     self.convertToDB = function convertToDB(request) {
+        var x = request.Format();
+        if (useFormat === "#otherFormatVal") {
+            x = request.OtherFormat();
+        }
         var convertedRequest = {
             "Id": request.Id,
             "DateRequested": request.DateRequested,
             "DateWanted": request.DateWanted(),
             "RequesterName": request.RequesterName(),
+            "Format": x,
+            "OtherFormat": request.Format(),
             "PriorityLevel": request.PriorityLevel(),
             "NumberRequests": request.NumberRequests(),
             "Requests": request.Requests(),
             "UsageExplanation": request.UsageExplanation(),
-            "Format": request.Format(),
             "Description": request.Description(),
             "RequestComments": request.RequestComments(),
             "Viewers": request.Viewers(),
@@ -193,9 +224,13 @@ var ViewModel = function () {
             "filterUSBuilders": request.filterUSBuilders(),
             "filterOther": request.filterOther(),
             "filterToDate": request.filterToDate(),
-            "filterFromDate": request.filterFromDate()
+            "filterFromDate": request.filterFromDate(),
         }
-
+        //convertedRequest
+        //if (request.Format() === "Other") {
+        //    convertedRequest.OtherFormat = request.Format;
+        //}
+        //self.formatOptions.push(request.OtherFormat());
         return convertedRequest;
     }
 
@@ -210,6 +245,7 @@ var ViewModel = function () {
             "Requests": new ko.observable(request.Requests),
             "UsageExplanation": new ko.observable(request.UsageExplanation),
             "Format": new ko.observable(request.Format),
+            "OtherFormat": new ko.observable(request.Format),
             "Description": new ko.observable(request.Description),
             "RequestComments": new ko.observable(request.RequestComments),
             "Viewers": new ko.observable(request.Viewers),
@@ -221,6 +257,7 @@ var ViewModel = function () {
             "CompletionStatus": new ko.observable(request.CompletionStatus),
             "TicketNumber": new ko.observable(request.TicketNumber),
             "TicketURL": new ko.observable(request.TicketURL),
+            "LinksList": new ko.observableArray([]),
             "filterNDBuilders": new ko.observable(request.filterNDBuilders),
             "filterOpenBuilders": new ko.observable(request.filterOpenBuilders),
             "filterUSBuilders": new ko.observable(request.filterUSBuilders),
@@ -241,8 +278,10 @@ var ViewModel = function () {
                 self.requests.push(self.convertFromDB(data[i]));
             }
 
+            self.getLinks();
             self.requests.sort(DateRequestedComparatorA);
         });
+        console.log(self.requests());
     };
 
     self.sort = function sort(element, data, comparatorA, comparatorD) {
@@ -288,7 +327,37 @@ var ViewModel = function () {
 
     self.getRequests();
 
+    self.getLinks = function getLinks() {
+        ajaxHelper('/api/Links/', 'GET').done(function (dataLinks) {
+
+            var length = self.requests().length;
+            var linkLength = dataLinks.length;
+
+            for (var k = 0; k < linkLength; k++) {
+                for (var j = 0; j < length; j++) {
+                    if (dataLinks[k].RequestId === self.requests()[j].Id) {
+                        self.requests()[j].LinksList.push(new link(dataLinks[k].URL, dataLinks[k].Name, dataLinks[k].Type));
+                    }
+                }
+
+            }
+        });
+    };
+    var useFormat;
+    self.addOther = function addOther() {
+        console.log("hi");
+        if ($("#Format :selected").text() === "Other") {
+            $("#otherFormatVal").css("visibility", "visible");
+            useFormat = "#otherFormatVal";
+        } else {
+            $("#otherFormatVal").css("visibility", "hidden");
+            useFormat = "#Format";
+        }
+
+    }
+
 };
+
 
 
 ko.applyBindings(new ViewModel());
@@ -306,9 +375,12 @@ function ajaxHelper(uri, method, data) {
         console.log(errorThrown);
     });
 }
+
+
 var errorReminded = false;
 var formatID = "#Format";
 $("#Format").click(function () {
+    console.log("hi");
     if ($("#Format").val() === "Other") {
         //$("#otherFormat").click(function () {
         $("#otherFormat").css("visibility", "visible");
@@ -353,9 +425,12 @@ $("#Submit").click(function () {
         contentType: "application/json;charset=utf-8",
         success: function (data, status, xhr) {
             console.log("The result is : " + status + ": " + data);
-            window.location.href = "/Home/RequestSubmission";
+            $("#successMessage").modal('show');
+
+            //window.location.href = "/Home/RequestSubmission";
         },
         error: function (xhr) {
+            //$("#successMessage").modal('show');
             console.log(xhr.responseText);
 
             var values = JSON.parse(xhr.responseText);
@@ -369,17 +444,15 @@ $("#Submit").click(function () {
                 }
             }
             errorReminded = true;
-
         }
     });
 
 
 });
 
-//$("#selectFile").click(function () {
-
-
-//})
+$("#successOk").click(function () {
+    window.location.href = "/Home/RequestSubmission";
+})
 
 
 
