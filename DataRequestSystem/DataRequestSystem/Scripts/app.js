@@ -2,15 +2,20 @@
 var ViewModel = function () {
     var self = this;
     self.requests = new ko.observableArray();
+    
+    self.mailSubject = "Test subject";
+    self.mailBody = "Test body";
+    self.mailUrl = 'mailto:test@example.com?subject=' + self.mailSubject + '&body=' + self.mailBody;
 
     self.currentElement = null;
     self.priorities = ["Low", "Normal", "Important", "Critical"];
-    self.queueStatuses = ["New", "Ticket Pending"];
+    self.queueStatuses = ["New", "In-progress", "Ticket Pending"];
     self.completeStatuses = ["Complete", "Declined"];
     self.formatOptions = ["Excel", "Visualization (chart)", "CFV", "Other"];
     self.statusColors = {
-        'New': 'white',
-        'Ticket Pending': '#ffff66',
+        'New': '#ffff66',
+        'In-progress': 'white',
+        'Ticket Pending': 'orange',
         'Complete': '#99ff66',
         'Declined': '#ff9980'
     }
@@ -24,17 +29,10 @@ var ViewModel = function () {
     };
 
     self.edit = function edit(data, event) {
-        var target = (event.currentTarget) ? event.currentTarget : event.srcElement;
-        var parent = target.parentElement;
+        var parent = $('.panel-body').get(0);
         var arr = parent.querySelectorAll('.editable');
 
         var i, length = arr.length;
-        for (i = 0; i < length; i++) {
-            $(arr[i]).prop("readonly", false);
-        }
-
-        arr = parent.querySelectorAll('.selector');
-        length = arr.length;
         for (i = 0; i < length; i++) {
             $(arr[i]).prop("disabled", false);
         }
@@ -47,20 +45,16 @@ var ViewModel = function () {
 
         var i, length = arr.length;
         for (i = 0; i < length; i++) {
-            $(arr[i]).prop("readonly", true);
+            $(arr[i]).prop("disabled", true);
         }
 
-        arr = parent.querySelectorAll('.selector');
-        length = arr.length;
-        for (i = 0; i < length; i++) {
-            $(arr[i]).prop("disabled", true);
+        if (self.queueStatuses.indexOf(data.CompletionStatus()) !== -1) {
+            data.CompletionStatus('In-progress');
         }
 
         var convertedData = self.convertToDB(data);
 
-        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData).done(function () {
-            window.location.href = "/Home/RequestQueue";
-        });
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
     };
 
     self.addFile = function addFile(data) {
@@ -88,12 +82,38 @@ var ViewModel = function () {
         });
     };
 
-    self.declineRequest = function declineRequest(data) {
+    self.reopenRequest = function reopenRequest(data) {
+        data.CompletionStatus('In-progress');
+        var convertedData = self.convertToDB(data);
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
+    }
 
+    self.declineRequest = function declineRequest(data) {
+        data.CompletionStatus('Declined');
+        var convertedData = self.convertToDB(data);
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
     }
 
     self.completeRequest = function completeRequest(data) {
+       // data.CompletionStatus('Complete'); window.open('mailto:test@example.com?subject=' + subject + '&body=' + body);
+        var convertedData = self.convertToDB(data);
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
+    }
 
+    self.linkTicket = function linkTicket(data) {
+        var input = $(ticketInput).val();
+        var number = parseInt(input);
+        var urlStart = 'http://btprojects.buildertrend.net/Issues/IssueDetail.aspx?id='
+
+        if (isNaN(number)) {
+            alert("Please enter an integer as the ticket number.");
+        } else {
+            data.TicketNumber(number);
+            data.TicketURL(urlStart + number);
+        }
+
+        $(ticketInput).val('');
+        return;
     }
 
     self.matchesFilters = function matchesFilters(request) {
@@ -172,8 +192,8 @@ var ViewModel = function () {
     self.convertFromDB = function convertFromDB(request) {
         var convertedRequest = {
             "Id": request.Id,
-            "DateRequested": request.DateRequested,
-            "DateWanted": new ko.observable(request.DateWanted),
+            "DateRequested": new Date(request.DateRequested),
+            "DateWanted": new ko.observable(new Date(request.DateWanted)),
             "RequesterName": new ko.observable(request.RequesterName),
             "PriorityLevel": new ko.observable(request.PriorityLevel),
             "NumberRequests": new ko.observable(request.NumberRequests),
@@ -184,7 +204,7 @@ var ViewModel = function () {
             "RequestComments": new ko.observable(request.RequestComments),
             "Viewers": new ko.observable(request.Viewers),
             "NumberViewers": new ko.observable(request.NumberViewers),
-            "DatePulled": new ko.observable(request.DatePulled),
+            "DatePulled": new ko.observable(new Date(request.DatePulled)),
             "DataPulledBy": new ko.observable(request.DataPulledBy),
             "DevComments": new ko.observable(request.DevComments),
             "UncompletionReason": new ko.observable(request.UncompletionReason),
@@ -195,8 +215,8 @@ var ViewModel = function () {
             "filterOpenBuilders": new ko.observable(request.filterOpenBuilders),
             "filterUSBuilders": new ko.observable(request.filterUSBuilders),
             "filterOther": new ko.observable(request.filterOther),
-            "filterToDate": new ko.observable(request.filterToDate),
-            "filterFromDate": new ko.observable(request.filterFromDate)
+            "filterToDate": new ko.observable(new Date(request.filterToDate)),
+            "filterFromDate": new ko.observable(new Date(request.filterFromDate))
         }
 
         return convertedRequest;
@@ -242,20 +262,17 @@ var ViewModel = function () {
 
     ko.bindingHandlers.date = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            var value = valueAccessor();
-            element.value = value().substring(0, 10);
-
             ko.utils.registerEventHandler(element, "change", function () {
                 var value = valueAccessor();
                 value(new Date(element.value));
+                console.log('wooooah');
+                console.log(value());
             });
         },
 
         update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var value = valueAccessor();
-            console.log(value);
-            console.log(value());
-            element.value = value().substring(0, 10);
+            element.value = value().toISOString().substring(0, 10);
         }
     };
 

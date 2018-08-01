@@ -17,7 +17,8 @@
 }
 
 
-.panel-body {    border: 1px solid lightgray;
+.panel-body {
+    border: 1px solid lightgray;
     background: #e8f0f8;
 }
 
@@ -56,11 +57,11 @@
     background-color: #5bc9f1;
 }
 
-.request-table-headers > * {
-    text-align: center;
-    padding: 0px;
-    margin: 0px;
-}
+    .request-table-headers > * {
+        text-align: center;
+        padding: 0px;
+        margin: 0px;
+    }
 
 .panel-body div.row *, .requestRow * {
     overflow-wrap: break-word;
@@ -105,12 +106,44 @@
     text-align: center;
 }
 
-.dropdown-menu ul li {
-    font-weight: 100;
+    .dropdown-menu ul li {
+        font-weight: 100;
+    }
+
+        .dropdown-menu ul li .glyphicon {
+            padding: 0;
+            margin: 0;
+            position: static;
+        }
+
+.ticketAdder {
+    padding: 0;
 }
 
-    .dropdown-menu ul li .glyphicon {
-        padding: 0;
-        margin: 0;
-        position: static;
+#buttons form {
+    padding: 0;
+    margin-left: 15px;
+}
+
+#buttons button {
+    margin-left: 15px;
+}
+
+    #buttons button:nth-of-type(1) {
+        background-color: #ffd11a;
+        margin-left: 15px;
     }
+
+    #buttons button:nth-of-type(2) {
+        background-color: #009900;
+        margin-left: 15px;
+    }
+
+    #buttons button:nth-of-type(3) {
+        background-color: #ff5c33;
+        margin-left: 15px;
+    }
+
+#buttons form input {
+    background-color: #5bc9f1;
+}

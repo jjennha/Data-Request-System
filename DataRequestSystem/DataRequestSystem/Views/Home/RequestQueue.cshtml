@@ -108,8 +108,8 @@
                 <div class="panel panel-default requestRow panel-heading collapsed row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse"
                      data-bind="attr: {'data-target' : ('#collapse' + $data.Id) }, style: { 'background-color': $root.statusColors[$data.CompletionStatus()] }">
 
-                    <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
-                    <span class="col-md-2" data-bind="text: $data.DateWanted().substring(0, 10)"></span>
+                    <span class="col-md-2" data-bind="text: $data.DateRequested.toLocaleString().substring(0, $data.DateRequested.toLocaleString().indexOf(','))"></span>
+                    <span class="col-md-2" data-bind="text: $data.DateWanted().toLocaleString().substring(0, $data.DateWanted().toLocaleString().indexOf(','))"></span>
                     <span class="col-md-2" data-bind="text: $data.PriorityLevel"></span>
                     <span class="col-md-2" data-bind="text: $data.RequesterName"></span>
                     <span class="col-md-2" data-bind="text: $data.CompletionStatus"></span>
@@ -123,73 +123,73 @@
 
                         <div class="row">
                             <strong class="col-md-3">Date Requested:</strong>
-                            <span class="col-md-2" data-bind="text: $data.DateRequested.substring(0, 10)"></span>
+                            <span class="col-md-2" data-bind="text: $data.DateRequested.toLocaleString().substring(0, $data.DateRequested.toLocaleString().indexOf(','))"></span>
                             <div class="col-md-1"></div>
                             <strong class="col-md-3">Date Wanted By:</strong>
-                            <input class="col-md-2 panel editable" type="date" data-bind="date: $data.DateWanted" readonly>
+                            <input class="col-md-2 panel editable" type="date" data-bind="date: $data.DateWanted" disabled>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Requester Name:</strong>
-                            <input class="col-md-2 panel editable" data-bind="value: $data.RequesterName" readonly>
+                            <input class="col-md-2 panel editable" data-bind="value: $data.RequesterName" disabled>
                             <div class="col-md-1"></div>
                             <strong class="col-md-3">Number of Requests: </strong>
-                            <input class="col-md-2 panel editable" data-bind="value: $data.NumberRequests" readonly>
+                            <input class="col-md-2 panel editable" data-bind="value: $data.NumberRequests" disabled>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Format: </strong>
-                            <select class="col-md-2 panel selector" data-bind="value: $data.Format, options: $root.formatOptions, optionsCaption: $data.Format" disabled></select>
+                            <select class="col-md-2 panel editable" data-bind="value: $data.Format, options: $root.formatOptions, optionsCaption: $data.Format" disabled></select>
                             <div class="col-md-1"></div>
                             <strong class="col-md-3">Priority Level: </strong>
-                            <select class="col-md-2 panel selector" data-bind="value: $data.PriorityLevel, options: $root.priorities, optionsCaption: $data.PriorityLevel" disabled></select>
+                            <select class="col-md-2 panel editable" data-bind="value: $data.PriorityLevel, options: $root.priorities, optionsCaption: $data.PriorityLevel" disabled></select>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Request(s): </strong>
-                            <textarea class="editable" data-bind="value: $data.Requests" readonly></textarea>
+                            <textarea class="editable" data-bind="value: $data.Requests" disabled></textarea>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Description: </strong>
-                            <textarea class="col-md-8 editable" data-bind="value: $data.Description" readonly></textarea>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.Description" disabled></textarea>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Number of Viewers: </strong>
-                            <input class="col-md-2 editable panel" data-bind="value: $data.NumberViewers" readonly>
+                            <input class="col-md-2 editable panel" data-bind="value: $data.NumberViewers" disabled>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Viewers: </strong>
-                            <textarea class="col-md-8 editable" data-bind="value: $data.Viewers" readonly></textarea>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.Viewers" disabled></textarea>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Usage Explanation: </strong>
-                            <textarea class="col-md-8 editable" data-bind="value: $data.UsageExplanation" readonly></textarea>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.UsageExplanation" disabled></textarea>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Additional Comments: </strong>
-                            <textarea class="col-md-8 editable" data-bind="value: $data.RequestComments" readonly></textarea>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.RequestComments" disabled></textarea>
                         </div><br />
 
                         <div class="row">
                             <strong class="col-md-3">Requester Filters: </strong>
                             <div class="col-md-2">
                                 <strong>Non-demo Builders: </strong>
-                                <input class="selector" data-bind="checked: $data.filterNDBuilders" type="checkbox" disabled>
+                                <input class="editable" data-bind="checked: $data.filterNDBuilders" type="checkbox" disabled>
                             </div>
 
                             <div class="col-md-2">
                                 <strong>Open Builders: </strong>
-                                <input class="selector" data-bind="checked: $data.filterOpenBuilders" type="checkbox" disabled>
+                                <input class="editable" data-bind="checked: $data.filterOpenBuilders" type="checkbox" disabled>
                             </div>
 
                             <div class="col-md-2">
                                 <strong>US Builders: </strong>
-                                <input class="selector" data-bind="checked: $data.filterUSBuilders" type="checkbox" disabled>
+                                <input class="editable" data-bind="checked: $data.filterUSBuilders" type="checkbox" disabled>
                             </div>
 
                             <div class="col-md-3">
@@ -200,19 +200,19 @@
 
                         <div class="row">
                             <strong class="col-md-3">Date Range: </strong>
-                            <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" readonly/>
+                            <input data-bind="date: $data.filterFromDate" class="col-md-2 panel editable" type="date" disabled />
                             <strong class="col-md-1"> To </strong>
-                            <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" readonly/>
+                            <input data-bind="date: $data.filterToDate" class="col-md-2 panel editable" type="date" disabled />
                         </div>
 
                         <h4>Developer Notes</h4>
 
                         <div class="row">
                             <strong class="col-md-3">Data Pulled By: </strong>
-                            <input class="col-md-2 panel editable" data-bind="value: $data.DataPulledBy" readonly>
+                            <input class="col-md-2 panel editable" data-bind="value: $data.DataPulledBy" disabled>
                             <div class="col-md-1"></div>
                             <strong class="col-md-3">Date Pulled: </strong>
-                            <input class="col-md-2 panel editable" type="date" data-bind="date: $data.DatePulled" readonly>
+                            <input class="col-md-2 panel editable" type="date" data-bind="date: $data.DatePulled" disabled>
                         </div>
 
                         <div class="row">
@@ -221,44 +221,57 @@
                             @*<input class="col-md-3 editable" id="selectFile" accept="*" required="" type="file" multiple="" data-bind="attr: {href: $data.FileURLs}, value: $data.FileNames" readonly>*@
                             <form class="fileInfo">
                                 <div>
-                                    <input class="span3" type="file" id="attachedFiles" style="display: none"/>
-                                    <input class="btn span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload" >
+                                    <input class="span3" type="file" id="attachedFiles" style="display: none" />
+                                    <input class="btn span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload">
                                     <input class="btn span3" type="button" data-bind="click: $root.addFile">
 
                                 </div>
                             </form>
 
                             @*<input id="myInput" type="file" style="visibility:hidden" />
-                            <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
+            <input class="span3" type="button" value="Show Dialog" onclick="$('#myInput').click();" />*@
 
                             <strong class="col-md-3">SQL Queries: </strong>
-                            <input class="col-md-3 panel editable" data-bind="value: $data.SQLQueries" readonly>
+                            <input class="col-md-2 panel editable" data-bind="value: $data.SQLQueries" disabled>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Completion Status: </strong>
-                            <select class="col-md-3 panel selector" data-bind="value: $data.CompletionStatus, options: $root.queueStatuses, optionsCaption: $data.CompletionStatus()" disabled></select>
+                            <select class="col-md-2 panel editable" data-bind="value: $data.CompletionStatus, options: $root.queueStatuses, optionsCaption: $data.CompletionStatus()" disabled></select>
 
-                            <strong class="col-md-3">Ticket: </strong>
-                            <a class="col-md-1" data-bind="attr: {href: $data.TicketURL}, value: $data.TicketNumber"></a>
+                            <div class="col-md-1"></div>
+
+                            <strong class="col-md-1">Ticket: </strong>
+                            <button class="btn col-md-1" data-bind="click: $root.linkTicket">Link Ticket</button>
+                            <input placeholder="Ticket Number" type="text" class="panel editable col-md-2" id="ticketInput" disabled />
+                            <a class="col-md-1" data-bind="visible: $data.TicketNumber() !== 0 && $data.TicketURL() !== null, attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Reason(s) for Incompletion, if applicable: </strong>
-                            <textarea class="col-md-8 editable" data-bind="value: $data.UncompletionReason" readonly></textarea>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.UncompletionReason" disabled></textarea>
                         </div>
 
                         <div class="row">
                             <strong class="col-md-3">Developer Comments: </strong>
-                            <textarea class="col-md-8 editable" data-bind="value: $data.DevComments" readonly></textarea>
+                            <textarea class="col-md-8 editable" data-bind="value: $data.DevComments" disabled></textarea>
                         </div>
 
-                        <button class="btn" id="editor" data-bind="click: $root.edit">Edit</button>
-                        <button class="btn" id="saveEdits" data-bind="click: $root.saveEdit">Save</button>
-                        <button class="btn" data-bind="click: $root.declineRequest">Decline</button>
-                        <button class="btn" data-bind="click: $root.completeRequest">Complete</button>
-                    </div> 
-    
+                        <div class="row" id="buttons">
+                            <button class="btn col-md-1" id="editor" data-bind="click: $root.edit">Edit</button>
+                            <button class="btn col-md-1" id="saveEdits" data-bind="click: $root.saveEdit">Save</button>
+
+                            <div class="col-md-7"></div>
+
+                            <button class="btn col-md-1" data-bind="click: $root.declineRequest">Decline</button>
+
+                            <form id="completeForm" class="col-md-1" data-bind="attr: {action: $root.mailUrl}" method="post" enctype="text/plain">
+                                <input class="btn" type="submit" value="Complete">
+                            </form>
+                        </div>
+
+                    </div>
+
                 </div>
                 <!-- COLLAPSIBLE INFO END -->
             </div">
