@@ -20,13 +20,13 @@ namespace DataRequestSystem.Controllers
         private DataRequestSystemContext db = new DataRequestSystemContext();
 
         // GET: api/
-        [System.Web.Http.Route("api/getDirectory")]
-        public Task<IHttpActionResult> getDirectory()
-        {
-            //DirectorySearcher directorySearch = new DirectorySearcher();
+        //[System.Web.Http.Route("api/getDirectory")]
+        //public Task<IHttpActionResult> getDirectory()
+        //{
+        //    //DirectorySearcher directorySearch = new DirectorySearcher();
 
-            //return Ok();
-        }
+        //    //return Ok();
+        //}
 
         // GET: api/FormRequests
         public IQueryable<FormRequest> GetFormRequests()
