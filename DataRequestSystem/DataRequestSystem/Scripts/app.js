@@ -31,14 +31,20 @@ var ViewModel = function () {
         "[insert link to completed request page here]%0D%0A%0D%0APlease let the Data Science Team know if you have any questions!%0D%0A%0D%0AThanks!";
 
     self.completeRequest = function completeRequest(data) {
-        data.CompletionStatus = ko.observable('Complete');
-        var convertedData = self.convertToDB(data);
-        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
+        //data.CompletionStatus = ko.observable('Complete');
+        data.CompletionStatus('Complete');
 
-        return (self.mailUrlPt1 + 'test@example.com' +
+        var location = (self.mailUrlPt1 + 'test@example.com' +
             self.mailUrlPt2 + data.Id +
             self.mailUrlPt3 + data.RequesterName().split(' ')[0] +
             self.mailBody);
+
+        window.location = location;
+
+        var convertedData = self.convertToDB(data);
+
+        ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);
+
     }
 
     self.currentElement = null;
@@ -64,27 +70,33 @@ var ViewModel = function () {
     };
 
     self.edit = function edit(data, event) {
-        var parent = $('.panel-body').get(0);
-        var arr = parent.querySelectorAll('.editable');
+        var editables = document.querySelectorAll('.editable');
 
-        var i, length = arr.length;
+        var i, length = editables.length;
         for (i = 0; i < length; i++) {
-            $(arr[i]).prop("disabled", false);
+            $(editables[i]).prop("disabled", false);
         }
 
+        //$(".editable").prop("disabled", false);
        
         $("#Format").css("visibility", "visible");
         
     };
 
     self.saveEdit = function saveEdit(data) {
-        var target = (event.currentTarget) ? event.currentTarget : event.srcElement;
-        var parent = target.parentElement;
-        var arr = parent.querySelectorAll('.editable');
+        //var target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+        //var parent = target.parentElement;
+        //var arr = parent.querySelectorAll('.editable');
 
-        var i, length = arr.length;
+        //var i, length = arr.length;
+        //for (i = 0; i < length; i++) {
+        //    $(arr[i]).prop("disabled", true);
+        //}
+        var editables = document.querySelectorAll('.editable');
+
+        var i, length = editables.length;
         for (i = 0; i < length; i++) {
-            $(arr[i]).prop("disabled", true);
+            $(editables[i]).prop("disabled", true);
         }
 
         if (self.queueStatuses.indexOf(data.CompletionStatus()) !== -1) {
@@ -92,6 +104,7 @@ var ViewModel = function () {
         }
 
         $("#Format").css("visibility", "hidden");
+        $("#otherFormatVal").css("visibility", "hidden");
         var convertedData = self.convertToDB(data);
 
         //ajaxHelper("/api/FormRequests/" + data.Id, 'PUT', convertedData);

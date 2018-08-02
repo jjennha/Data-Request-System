@@ -15,8 +15,11 @@
                 <img src="~/Images/AWESOME_CLOUD.jpg" style=" align-items:center; width: 80px; height: 60px" id="shakeme"/>
                 <script>
                     $('#shakeme').click(function () {
-                        document.getElementById("#shakeme").src == "~/Images/BESTSTORMCLOUD.jpg";
+                        //document.getElementById("#shakeme").src == "~/Images/AWESOME_CLOUD.jpg";
+                        var newSrc = $('#shakeme').attr('src',"/Images/BESTSTORMCLOUD.jpg");
+                        
                     });
+                    
                 </script>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>

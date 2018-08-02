@@ -141,7 +141,7 @@
                             <strong class="col-md-3">Format: </strong>
 
                             <input class="panel editable" data-bind="value: $data.OtherFormat">
-                            <select class=" panel editable" id="Format" data-bind="placeholder:$data.OtherFormat , value: $data.Format, options: $root.formatOptions, click: $root.addOther" style="visibility: visible"></select>
+                            <select class=" panel editable" id="Format" data-bind="placeholder:$data.OtherFormat , value: $data.Format, options: $root.formatOptions, click: $root.addOther" style="visibility: hidden"></select>
                             <input class="panel editable" id="otherFormatVal" data-bind="value: $data.OtherFormat" style="visibility: hidden" />
 
                         </div>
@@ -277,7 +277,7 @@
 
                             <button class="btn col-md-1" data-bind="click: $root.declineRequest">Decline</button>
 
-                            <form id="completeForm" class="col-md-1" data-bind="attr: {action: $root.completeRequest($data)}" method="post" enctype="text/plain">
+                            <form id="completeForm" class="col-md-1" data-bind="click: $root.completeRequest" method="post" enctype="text/plain">
                                 <input class="btn" type="submit" value="Complete">
                             </form>
                         </div>
