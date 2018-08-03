@@ -166,4 +166,10 @@
 #linkNames li {
     padding: 0;
 }
-
+.deleteFile {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.fileName {
+    padding-right:0;
+}

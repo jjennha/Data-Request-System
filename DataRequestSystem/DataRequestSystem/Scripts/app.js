@@ -1,15 +1,27 @@
-﻿function link(url, name, type) {
+﻿function link(url, name, type, id) {
     //var self = this;
     this.Name = new ko.observable(name);
     this.URL = new ko.observable(url);
     this.Type = new ko.observable(type);
+    this.Id = id;
 }
 
-function dothis() {
+function fileStuff(input) {
     console.log("hi");
     var fileName = $("#attachedFiles")[0].files[0].name;
     $("#linkNames").append(fileName);
     console.log(fileName);
+
+    $("#attachedFiles")[0].files[0].url = "C://";
+    console.log($("#attachedFiles")[0].files[0].url);
+    //if (input.files && input.files[0]) {
+    //    var reader = new FileReader();
+    //    reader.onload = function (e) {
+    //        $('#blah').attr('src', e.target.result)
+    //    };
+    //    reader.readAsDataURL(input.files[0]);
+    //}
+
 }
 
 ko.bindingHandlers.placeholder = {
@@ -22,7 +34,7 @@ ko.bindingHandlers.placeholder = {
 var ViewModel = function () {
     var self = this;
     self.requests = new ko.observableArray();
-    
+
     self.mailUrlPt1 = 'mailto:';
     self.mailUrlPt2 = '?subject=Data Request ';
     self.mailUrlPt3 = '&body=Hi ';
@@ -78,9 +90,9 @@ var ViewModel = function () {
         }
 
         //$(".editable").prop("disabled", false);
-       
+
         $("#Format").css("visibility", "visible");
-        
+
     };
 
     self.saveEdit = function saveEdit(data) {
@@ -126,6 +138,7 @@ var ViewModel = function () {
     };
 
     self.addFile = function addFile(data) {
+        console.log(data);
         var r = {
             "RequestId": data.Id,
             "Type": "File",
@@ -134,7 +147,16 @@ var ViewModel = function () {
         };
         ajaxHelper('/api/Links/PostLinks', 'POST', r);
     };
-
+    self.deleteFile = function deleteFile(data) {
+        for (var i = 0; i < self.requests().length; i++) {
+            self.requests()[i].LinksList.remove(function (file) {
+                return file.Id == data.Id;
+            });
+            console.log(self.requests()[i].LinksList());
+            
+        }
+        ajaxHelper('/api/Links/' + data.Id, 'DELETE', data);
+    }
     self.reopenRequest = function reopenRequest(data) {
         data.CompletionStatus('In-progress');
         var convertedData = self.convertToDB(data);
@@ -347,7 +369,7 @@ var ViewModel = function () {
             for (var k = 0; k < linkLength; k++) {
                 for (var j = 0; j < length; j++) {
                     if (dataLinks[k].RequestId === self.requests()[j].Id) {
-                        self.requests()[j].LinksList.push(new link(dataLinks[k].URL, dataLinks[k].Name, dataLinks[k].Type));
+                        self.requests()[j].LinksList.push(new link(dataLinks[k].URL, dataLinks[k].Name, dataLinks[k].Type, dataLinks[k].Id));
                     }
                 }
 
