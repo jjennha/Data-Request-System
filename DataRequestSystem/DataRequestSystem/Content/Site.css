@@ -83,15 +83,19 @@ textarea {
 
 .modal-content {
     text-align: center;
-    padding: 20px;
-    background: #13a9e1;
+    padding-left:50px;
+    padding-right: 50px;
+    background: #aed69e; /*#13a9e1;*/
+    border: 2px solid #527a4e;
 }
 
-.modal-content h3 {
-    color: white;
-}
+    .modal-content h3 {
+        font-family: 'Fugaz One', cursive;
+        color: white;
+    }
 #successOk, #successOk2 {
-    background-color: #ffa933;
+    background-color: #545660;
+    color: white;
 }
 .modal-dialog {
     padding-top: 20%;
@@ -108,8 +112,10 @@ textarea {
     padding-bottom: 10px;
     border-top: none;
 }
-.modal.in .modal-dialog, .modal.out .modal-dialog {
+.modal.in .modal-dialog, .modal-dialog {
     width: fit-content;
+    font-family: 'Fugaz One', cursive;
+    color: white;
 }
 .editable {
     border: 1px solid lightslategrey;

@@ -7,13 +7,10 @@
 }
 
 function fileStuff(input) {
-    console.log("hi");
-    var fileName = $("#attachedFiles")[0].files[0].name;
-    $("#linkNames").append(fileName);
-    console.log(fileName);
 
-    $("#attachedFiles")[0].files[0].url = "C://";
-    console.log($("#attachedFiles")[0].files[0].url);
+
+    //$("#attachedFiles")[0].files[0].url = "C://";
+    //console.log($("#attachedFiles")[0].files[0].url);
     //if (input.files && input.files[0]) {
     //    var reader = new FileReader();
     //    reader.onload = function (e) {
@@ -138,6 +135,8 @@ var ViewModel = function () {
     };
 
     self.addFile = function addFile(data) {
+        console.log(self.requests());
+        console.log(data.LinksList());
         console.log(data);
         var r = {
             "RequestId": data.Id,
@@ -145,7 +144,15 @@ var ViewModel = function () {
             "Name": $("#attachedFiles")[0].files[0].name,
             "URL": $("#attachedFiles").val(),
         };
-        ajaxHelper('/api/Links/PostLinks', 'POST', r);
+        //for (var i = 0; i < self.requests().length; i++) {
+        //    console.log(self.requests()[i].Id +", "+ data.Id);
+        //    if (self.requests()[i].Id === data.Id) {
+        //        self.requests()[i].LinksList.push(new link(r.Url, r.Name, r.Type, r.Id));
+        //        console.log("pushed");
+        //    }
+        //}
+        data.LinksList.push(new link(r.URL, r.Name, r.Type, r.Id));
+        ajaxHelper('/api/Links/PostLinks/', 'POST', r);
     };
     self.deleteFile = function deleteFile(data) {
         for (var i = 0; i < self.requests().length; i++) {

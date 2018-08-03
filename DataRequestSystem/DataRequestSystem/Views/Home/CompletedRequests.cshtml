@@ -189,11 +189,14 @@
                             <strong class="col-md-3">File Attached: </strong>
                             <form class="alert alert-info fileInfo">
                                 <div class="col-md-9" id="fileStuff">
-                                    <input class="span3" type="file" id="attachedFiles" style="display: none" onchange="dothis(); $('#addFile').click();" />
-                                    <input class="btn btn-info span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Choose">
+                                    <input class="span3" type="file" id="attachedFiles" style="display: none" onchange="fileStuff(this); $('#addFile').click();" />
+                                    <input class="btn btn-info span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload">
                                     <input class="btn btn-info span3" id="addFile" style="display: none" type="button" data-bind="click: $root.addFile" value="Upload">
                                     <ul class="span3" id="linkNames" data-bind="foreach: $data.LinksList">
-                                        <li><a data-bind="text: $data.Name, attr: {href: $data.URL}"></a></li>
+                                        <li class="panel">
+                                            <a class="fileName" data-bind="text: $data.Name, attr: {href: $data.URL}"></a>
+                                            <span class="btn glyphicon glyphicon-remove deleteFile" data-bind="click: $root.deleteFile"></span>
+                                        </li>
                                     </ul>
                                 </div>
                             </form>
@@ -247,3 +250,17 @@
         </div>
     </div>
 </body>
+
+<div class="modal fade" id="successSaveMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h3>Saved!</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="successOk2" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -190,23 +190,23 @@
 
                         <div class="row">
                             <strong class="col-md-3">Requester Filters: </strong>
-                            <div class="col-md-2">
-                                <strong>Non-demo Builders: </strong>
+                            <div class="col-md-2 filterInline">
+                                <strong>Non-demo Builders:</strong>
                                 <input class="editable" data-bind="checked: $data.filterNDBuilders" type="checkbox" disabled>
                             </div>
 
-                            <div class="col-md-2">
-                                <strong>Open Builders: </strong>
+                            <div class="col-md-2 filterInline">
+                                <strong>Open Builders:</strong>
                                 <input class="editable" data-bind="checked: $data.filterOpenBuilders" type="checkbox" disabled>
                             </div>
 
-                            <div class="col-md-2">
-                                <strong>US Builders: </strong>
+                            <div class="col-md-2 filterInline">
+                                <strong>US Builders:</strong>
                                 <input class="editable" data-bind="checked: $data.filterUSBuilders" type="checkbox" disabled>
                             </div>
 
-                            <div class="col-md-3">
-                                <strong>Other: </strong>
+                            <div class="col-md-3 filterInline">
+                                <strong>Other:</strong>
                                 <input class="editable panel" data-bind="checked: $data.filterOther" type="text" disabled>
                             </div>
                         </div>
@@ -230,15 +230,16 @@
                         </div>
 
                         <div class="row">
+                            
                             <strong class="col-md-3">File Attached: </strong>
                             <form class="alert alert-info fileInfo">
                                 <div class="col-md-9" id="fileStuff">
                                     <input class="span3" type="file" id="attachedFiles" style="display: none" onchange="fileStuff(this); $('#addFile').click();" />
-                                    <input class="btn btn-info span3" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload">
+                                    <input class="btn btn-info span3 editable" id="selectFile" type="button" onclick="$('#attachedFiles').click();" value="Upload" >
                                     <input class="btn btn-info span3" id="addFile" style="display: none" type="button" data-bind="click: $root.addFile" value="Upload">
                                     <ul class="span3" id="linkNames" data-bind="foreach: $data.LinksList">
-                                        <li><a class="fileName"data-bind="text: $data.Name, attr: {href: $data.URL}"></a>
-                                        <span href="#" class="btn glyphicon glyphicon-remove deleteFile" data-bind="click: $root.deleteFile"></span></li>
+                                        <li class="panel"><a class="fileName" data-bind="text: $data.Name, attr: {href: $data.URL}"></a>
+                                        <span class="btn glyphicon glyphicon-remove deleteFile" data-bind="click: $root.deleteFile"></span></li>
                                     </ul>
                                 </div>
                             </form>
@@ -253,7 +254,7 @@
                             <div class="col-md-1"></div>
 
                             <strong class="col-md-1">Ticket: </strong>
-                            <button class="btn col-md-1" data-bind="click: $root.linkTicket">Link Ticket</button>
+                            <button class="btn btn-info"  data-bind="click: $root.linkTicket" disabled>Link Ticket</button>
                             <input placeholder="Ticket Number" type="text" class="panel editable col-md-2" id="ticketInput" disabled />
                             <a class="col-md-1" data-bind="visible: $data.TicketNumber() !== 0 && $data.TicketURL() !== null, attr: {href: $data.TicketURL}, text: $data.TicketNumber"></a>
                         </div>
